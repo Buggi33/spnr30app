@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "892806836952",
+    "project_id": "spnr30app",
+    "storage_bucket": "spnr30app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892806836952:android:9078c1c121ae8087289dad",
+        "android_client_info": {
+          "package_name": "com.example.spnr30app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1Ir4gfYJEgd_FDvhY1Pf0x-SaGJsUgnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
