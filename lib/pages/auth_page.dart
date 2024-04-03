@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:spnr30app/pages/choose_screen_page.dart';
+import 'package:spnr30app/pages/home_page.dart';
 import './login_or_register_page.dart';
 
 class AuthPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           //user is logged in
           if (snapshot.hasData) {
-            return const ChooseScreenPage();
+            return const HomePage();
           }
           //user is not logged in
           else {

@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../components/button.dart';
-import '../components/textfield.dart';
+import '../components/my_log_reg_button.dart';
+import '../components/my_textfield.dart';
 import '../helper/helper_functions.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -13,13 +14,15 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  //text editing controller
+//text editing controller
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPwdController = TextEditingController();
-  final nickNameController = TextEditingController();
+  final userNameController = TextEditingController();
+  final kidNameController = TextEditingController();
 
-  //sign user in method
+//sign user in method
   void signIn() async {
     //show loading circle
     showDialog(
@@ -30,22 +33,34 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       },
     );
-    //make sure passwords match
+//make sure passwords match
     if (passwordController.text != confirmPwdController.text) {
       //pop loading circle
       Navigator.pop(context);
-      //show error to user
+//show error to user
       displayMessageToUser("Hasło nie jest takie same", context);
       return;
     }
-    //try creating the user
+//try creating the user
     try {
-      //create the user
-      UserCredential? userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+//create the user
+      UserCredential? userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+//create a user document and collect them in firestore
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .set({
+        'email': userCredential.user!.email,
+        'username': userNameController.text,
+        'kidname': kidNameController.text,
+      });
       //pop loading circle
-      Navigator.pop(context);
+      if (context.mounted) Navigator.pop(context);
     } on FirebaseException catch (e) {
       //pop loading circle
       Navigator.pop(context);
@@ -64,13 +79,13 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //logo
-                  // Image.asset('assets/images/sloneczka.png', height: 150),
+//logo
+// Image.asset('assets/images/sloneczka.png', height: 150),
                   const Icon(size: 120, color: Colors.blue, Icons.person),
 
                   const SizedBox(height: 20),
 
-                  //Załóż konto
+//Załóż konto
                   Text(
                     'Wypełnij poniższe pola!',
                     style: TextStyle(
@@ -81,17 +96,29 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 25),
 
-                  //pole użytkownika
+//imię i nazwisko
                   MyTextField(
-                    controller: nickNameController,
+                    maxLines: 1,
+                    controller: userNameController,
                     hintText: 'Imie i nazwisko',
                     obscureText: false,
                   ),
 
                   const SizedBox(height: 10),
 
-                  //pole email
+//imię dziecka
                   MyTextField(
+                    maxLines: 1,
+                    controller: kidNameController,
+                    hintText: 'Imię dziecka',
+                    obscureText: false,
+                  ),
+
+                  const SizedBox(height: 10),
+
+//pole email
+                  MyTextField(
+                    maxLines: 1,
                     controller: emailController,
                     hintText: 'Email',
                     obscureText: false,
@@ -99,8 +126,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 10),
 
-                  //pole hasła
+//pole hasła
                   MyTextField(
+                    maxLines: 1,
                     controller: passwordController,
                     hintText: 'Hasło',
                     obscureText: true, //ukrywa hasło pod kropkami
@@ -108,8 +136,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   const SizedBox(height: 10),
 
-                  //pole hasła
+//pole hasła
                   MyTextField(
+                    maxLines: 1,
                     controller: confirmPwdController,
                     hintText: 'Potwierdź hasło',
                     obscureText: true, //ukrywa hasło pod kropkami
@@ -133,8 +162,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // const SizedBox(height: 25),
 
-                  //zaloguj się btn
-                  Button(
+//zaloguj się btn
+                  MyLogRegButton(
                     text: 'Zarejestruj',
                     onTap: signIn,
                   ),
@@ -188,7 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // const SizedBox(height: 40),
 
-                  //zarejestruj się
+//zarejestruj się
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

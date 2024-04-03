@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:spnr30app/components/button.dart';
-import 'package:spnr30app/components/textfield.dart';
+import 'package:spnr30app/components/my_log_reg_button.dart';
+import 'package:spnr30app/components/my_textfield.dart';
 // import 'package:spnr30app/components/square_tile.dart';
 
 class LoginPage extends StatefulWidget {
@@ -94,6 +93,7 @@ class _LoginPage extends State<LoginPage> {
 
                 //pole użytkownika
                 MyTextField(
+                  maxLines: 1,
                   controller: emailController,
                   hintText: 'Nazwa użytkownika',
                   obscureText: false,
@@ -103,6 +103,7 @@ class _LoginPage extends State<LoginPage> {
 
                 //pole hasła
                 MyTextField(
+                  maxLines: 1,
                   controller: passwordController,
                   hintText: 'Hasło',
                   obscureText: true, //ukrywa hasło pod kropkami
@@ -127,7 +128,7 @@ class _LoginPage extends State<LoginPage> {
                 const SizedBox(height: 25),
 
                 //zaloguj się btn
-                Button(
+                MyLogRegButton(
                   text: 'Zaloguj',
                   onTap: logIn,
                 ),
