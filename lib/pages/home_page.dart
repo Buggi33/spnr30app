@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:spnr30app/components/my_drawer.dart';
 import 'package:spnr30app/components/my_textfield.dart';
 import 'package:spnr30app/components/my_wall.dart';
+import 'package:spnr30app/helper/helper_methods.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -71,10 +72,10 @@ class _HomePageState extends State<HomePage> {
       ),
 //drawer
       drawer: const MyDrawer(),
+//wall
       body: Center(
         child: Column(
           children: [
-//wall
             Expanded(
 //get all posts from firestore
               child: StreamBuilder(
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
 //sorting by newest
                     .orderBy(
                       "TimeStamp",
-                      descending: false,
+                      descending: true,
                     )
                     .snapshots(),
                 builder: (context, snapshot) {
@@ -95,10 +96,12 @@ class _HomePageState extends State<HomePage> {
 //get and show the posts
                         final post = snapshot.data!.docs[index];
                         return MyWall(
-                            postmessage: post['PostMessage'],
-                            username: post['Username'],
-                            postId: post.id,
-                            likes: List<String>.from(post['Likes'] ?? []));
+                          postmessage: post['PostMessage'],
+                          username: post['Username'],
+                          postId: post.id,
+                          likes: List<String>.from(post['Likes'] ?? []),
+                          time: formatDate(post['TimeStamp']),
+                        );
                       },
                     );
                   } else if (snapshot.hasError) {
@@ -130,7 +133,10 @@ class _HomePageState extends State<HomePage> {
                   ),
 //send button
                   IconButton(
-                    onPressed: sendPost,
+                    onPressed: () {
+                      sendPost();
+                      FocusScope.of(context).unfocus();
+                    },
                     icon: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
