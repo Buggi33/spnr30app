@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:spnr30app/components/my_drawer.dart';
 import 'package:spnr30app/components/my_textfield.dart';
 import 'package:spnr30app/components/my_wall.dart';
-import 'package:spnr30app/helper/helper_methods.dart';
+import 'package:spnr30app/helper/helper_date_format.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,9 +23,9 @@ class _HomePageState extends State<HomePage> {
 //current user
   final currentUser = FirebaseAuth.instance.currentUser!;
 
-//send a post
-  void sendPost() async {
-//send only when something is in text field
+//add a post
+  void addPost() async {
+//add only when something is in text field
     if (textController.text.isNotEmpty) {
 //search the 'username' in other collection (Users)
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
@@ -97,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                         final post = snapshot.data!.docs[index];
                         return MyWall(
                           postmessage: post['PostMessage'],
+                          email: post['UserEmail'],
                           username: post['Username'],
                           postId: post.id,
                           likes: List<String>.from(post['Likes'] ?? []),
@@ -134,7 +135,7 @@ class _HomePageState extends State<HomePage> {
 //send button
                   IconButton(
                     onPressed: () {
-                      sendPost();
+                      addPost();
                       FocusScope.of(context).unfocus();
                     },
                     icon: Container(

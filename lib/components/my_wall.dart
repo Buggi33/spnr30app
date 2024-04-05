@@ -5,10 +5,11 @@ import 'package:spnr30app/components/my_comment_button.dart';
 import 'package:spnr30app/components/my_delete_button.dart';
 import 'package:spnr30app/components/my_like_button.dart';
 import 'package:spnr30app/components/my_comment.dart';
-import 'package:spnr30app/helper/helper_methods.dart';
+import 'package:spnr30app/helper/helper_date_format.dart';
 
 class MyWall extends StatefulWidget {
   final String postmessage;
+  final email;
   final String username;
   final String postId;
   final String time;
@@ -17,6 +18,7 @@ class MyWall extends StatefulWidget {
   const MyWall({
     super.key,
     required this.postmessage,
+    required this.email,
     required this.username,
     required this.likes,
     required this.postId,
@@ -30,6 +32,7 @@ class MyWall extends StatefulWidget {
 class _MyWallState extends State<MyWall> {
 //take user from firebase
   final currentUser = FirebaseAuth.instance.currentUser!;
+
 //comment text controller
   final _commentTextController = TextEditingController();
 //
@@ -83,6 +86,7 @@ class _MyWallState extends State<MyWall> {
           .add({
         "CommentText": commentText,
         "CommentedBy": username,
+        "CommentEmail": currentUser.email,
         "CommentTime": Timestamp.now(),
       });
     }
@@ -125,6 +129,57 @@ class _MyWallState extends State<MyWall> {
     );
   }
 
+//delete the post
+  void deletePost() async {
+//show dialog box to confirm delete
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Usuń Post'),
+        content: const Text('Czy na pewno chcesz usunąć post?'),
+        actions: [
+//delete button
+          TextButton(
+            onPressed: () async {
+//delete the comments from firestore as first
+              final commentDocs = await FirebaseFirestore.instance
+                  .collection("Posts")
+                  .doc(widget.postId)
+                  .collection("Comments")
+                  .get();
+
+              for (var doc in commentDocs.docs) {
+                await FirebaseFirestore.instance
+                    .collection('Posts')
+                    .doc(widget.postId)
+                    .collection('Comments')
+                    .doc(doc.id)
+                    .delete();
+              }
+//delete the post from firestore as second
+              FirebaseFirestore.instance
+                  .collection("Posts")
+                  .doc(widget.postId)
+                  .delete();
+//pop box
+              Navigator.pop(context);
+            },
+            child: const Text("Usuń"),
+          ),
+//cancel button
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Anuluj"),
+          ),
+        ],
+      ),
+    );
+    // print(
+    //     'Email bieżącego użytkownika "currentUser.email": ${currentUser.email}');
+    // print('Nazwa użytkownika postu "widget.username": ${widget.username}');
+    // print('Nazwa użytkownika postu "widget.email": ${widget.email}');
+  }
+
   @override
   Widget build(BuildContext context) {
 //get from firebase all comments
@@ -146,7 +201,7 @@ class _MyWallState extends State<MyWall> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //post and username
+//post message
               const SizedBox(width: 15),
               Expanded(
                 child: Column(
@@ -173,9 +228,12 @@ class _MyWallState extends State<MyWall> {
                   ],
                 ),
               ),
-              MyDeleteButton(
-                onTap: () {},
-              ),
+//delete button
+              if (currentUser.email == widget.email)
+                MyDeleteButton(
+                  size: 23,
+                  onTap: deletePost,
+                ),
             ],
           ),
           const SizedBox(height: 10),
@@ -250,10 +308,15 @@ class _MyWallState extends State<MyWall> {
                 shrinkWrap:
                     true, //good idea when have list inside the partent widget
                 physics: const NeverScrollableScrollPhysics(),
+                // physics: const AlwaysScrollableScrollPhysics(),
                 children: snapshot.data!.docs.map(
                   (doc) {
                     final commentData = doc.data() as Map<String, dynamic>;
+                    final commentId = doc.reference.id;
                     return MyComment(
+                      cmtEmail: commentData['CommentEmail'],
+                      postId: widget.postId,
+                      commentId: commentId,
                       text: commentData['CommentText'],
                       username: commentData['CommentedBy'],
                       time: formatDate(commentData['CommentTime']),
