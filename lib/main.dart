@@ -8,10 +8,13 @@ import 'package:spnr30app/pages/users_page.dart';
 import 'pages/auth_page.dart';
 
 void main() async {
+//FIREBASE FIRESTORE
+//init firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+//init app
   runApp(const MyApp());
 }
 

@@ -112,7 +112,10 @@ class _MyWallState extends State<MyWall> {
               //clear textfild/controller
               _commentTextController.clear();
             },
-            child: const Text("Dodaj"),
+            child: const Text(
+              "Dodaj",
+              style: TextStyle(color: Colors.black),
+            ),
           ),
 //cancel button
           TextButton(
@@ -122,7 +125,10 @@ class _MyWallState extends State<MyWall> {
               //clear textfild/controller
               _commentTextController.clear();
             },
-            child: const Text("Anuluj"),
+            child: Text(
+              "Anuluj",
+              style: TextStyle(color: Colors.grey[700]),
+            ),
           ),
         ],
       ),
@@ -164,12 +170,18 @@ class _MyWallState extends State<MyWall> {
 //pop box
               Navigator.pop(context);
             },
-            child: const Text("Usuń"),
+            child: const Text(
+              "Usuń",
+              style: TextStyle(color: Colors.red),
+            ),
           ),
 //cancel button
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Anuluj"),
+            child: const Text(
+              "Anuluj",
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         ],
       ),
@@ -182,7 +194,7 @@ class _MyWallState extends State<MyWall> {
 
   @override
   Widget build(BuildContext context) {
-//get from firebase all comments
+//get from firebase all comments for counting comments
     Stream<QuerySnapshot> countStream = FirebaseFirestore.instance
         .collection('Posts')
         .doc(widget.postId)
@@ -191,9 +203,22 @@ class _MyWallState extends State<MyWall> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(8),
-      ),
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(4, 4),
+              blurRadius: 15,
+              spreadRadius: 1,
+            ),
+            BoxShadow(
+              color: Colors.white,
+              offset: Offset(-4, -4),
+              blurRadius: 15,
+              spreadRadius: 1,
+            )
+          ]),
       margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
       padding: const EdgeInsets.all(25),
       child: Column(
@@ -251,7 +276,7 @@ class _MyWallState extends State<MyWall> {
 //like count
                   Text(
                     widget.likes.length.toString(),
-                    style: TextStyle(color: Colors.grey[700]),
+                    style: TextStyle(color: Colors.grey[500]),
                   ),
                 ],
               ),
@@ -277,8 +302,8 @@ class _MyWallState extends State<MyWall> {
                           : 0;
                       return Text(
                         docCount.toString(),
-                        style: const TextStyle(
-                          color: Colors.grey,
+                        style: TextStyle(
+                          color: Colors.grey[500],
                         ),
                       );
                     }),

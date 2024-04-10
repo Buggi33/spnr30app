@@ -58,6 +58,9 @@ class _RegisterPageState extends State<RegisterPage> {
         'email': userCredential.user!.email,
         'username': userNameController.text,
         'kidname': kidNameController.text,
+        'sunsPassword': "",
+        'owlsPassword': "",
+        'frogsPassword': "",
       });
       //pop loading circle
       if (context.mounted) Navigator.pop(context);

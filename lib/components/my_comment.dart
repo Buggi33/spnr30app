@@ -49,12 +49,19 @@ class _MyCommentState extends State<MyComment> {
 //pop box
                     Navigator.pop(context);
                   },
-                  child: const Text('Usuń'),
+                  child: const Text(
+                    'Usuń',
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ),
 //cancel button
                 TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text("Anuluj"))
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text(
+                    "Anuluj",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
               ],
             ));
     // print('currentUser.email: ${currentUser.email}');
@@ -65,7 +72,7 @@ class _MyCommentState extends State<MyComment> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: Colors.grey[200],
         borderRadius: BorderRadius.circular(4),
       ),
       margin: const EdgeInsets.only(bottom: 5),
