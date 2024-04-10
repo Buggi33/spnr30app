@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     FirebaseAuth.instance.signOut();
   }
 
+  String dropdownValue = 'Słoneczka';
 //current user
   final currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
 //store in firestore
         FirebaseFirestore.instance.collection('Posts').add(
           {
+            'Group': dropdownValue,
             'UserEmail': currentUser.email,
             'PostMessage': textController.text,
             'Username': username,
@@ -98,6 +100,7 @@ class _HomePageState extends State<HomePage> {
 //get and show the posts
                         final post = snapshot.data!.docs[index];
                         return MyWall(
+                          group: post['Group'],
                           postmessage: post['PostMessage'],
                           email: post['UserEmail'],
                           username: post['Username'],
@@ -128,12 +131,21 @@ class _HomePageState extends State<HomePage> {
                   top: 0, left: 25.0, right: 25, bottom: 25),
               child: Column(
                 children: [
-                  const MyDropdownButton(),
+                  MyDropdownButton(
+                    onChangedMDB: (String? newValue) {
+                      setState(() {
+                        dropdownValue = newValue!;
+                      });
+                    },
+                  ),
+                  // Container(
+                  //   child: Text(dropdownValue),
+                  // ),
                   const SizedBox(height: 5),
                   Row(
                     children: [
-                      //options field
-                      //text field
+//options field
+//text field
                       const SizedBox(width: 10),
                       Expanded(
                         child: MyTextField(
@@ -146,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      //send button
+//send button
                       IconButton(
                         onPressed: () {
                           addPost();

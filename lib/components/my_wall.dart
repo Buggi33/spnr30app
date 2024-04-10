@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:spnr30app/components/my_comment_button.dart';
 import 'package:spnr30app/components/my_delete_button.dart';
 import 'package:spnr30app/components/my_like_button.dart';
@@ -8,6 +9,7 @@ import 'package:spnr30app/components/my_comment.dart';
 import 'package:spnr30app/helper/helper_date_format.dart';
 
 class MyWall extends StatefulWidget {
+  final String group;
   final String postmessage;
   final email;
   final String username;
@@ -17,6 +19,7 @@ class MyWall extends StatefulWidget {
 
   const MyWall({
     super.key,
+    required this.group,
     required this.postmessage,
     required this.email,
     required this.username,
@@ -37,6 +40,19 @@ class _MyWallState extends State<MyWall> {
   final _commentTextController = TextEditingController();
 //
   bool isLiked = false;
+//color of groups
+  Color getColorForGroup(String group) {
+    switch (group) {
+      case 'Słoneczka':
+        return Colors.yellow[800] ?? Colors.yellow;
+      case 'Sówki':
+        return Colors.brown;
+      case 'Żabki':
+        return Colors.green;
+      default:
+        return Colors.black; // domyślny kolor
+    }
+  }
 
 //initialize the status of actual statewidget
   @override
@@ -221,29 +237,42 @@ class _MyWallState extends State<MyWall> {
           ]),
       margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
       padding: const EdgeInsets.all(25),
-      child: Column(
+      child:
+//post
+          Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-//post message
               const SizedBox(width: 15),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+//post group text
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.group,
+                        style: TextStyle(
+                          color: getColorForGroup(widget.group),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+//post text
                     Text(widget.postmessage),
                     const SizedBox(height: 10),
                     Row(
                       children: [
-//post username
+//post username text
                         Text(
                           widget.username,
                           style: const TextStyle(color: Colors.grey),
                         ),
 //cosmetic space between
                         const Text("  "),
-//post time
+//post time text
                         Text(
                           widget.time,
                           style: const TextStyle(color: Colors.grey),
