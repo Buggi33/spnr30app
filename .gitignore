@@ -43,3 +43,4 @@ app.*.map.json
 /android/app/release
 lib/firebase_options.dart
 lib/components/my_googlesheets_api.dart
+lib/X_no_need_actually
