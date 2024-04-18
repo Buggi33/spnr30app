@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPwdController = TextEditingController();
   final userNameController = TextEditingController();
-  final kidNameController = TextEditingController();
+  // final kidNameController = TextEditingController();
 
 //sign user in method
   void signIn() async {
@@ -57,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
           .set({
         'email': userCredential.user!.email,
         'username': userNameController.text,
-        'kidname': kidNameController.text,
+        // 'kidname': kidNameController.text,
         'sunsPassword': "",
         'owlsPassword': "",
         'frogsPassword': "",
@@ -79,169 +79,113 @@ class _RegisterPageState extends State<RegisterPage> {
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
 //logo
 // Image.asset('assets/images/sloneczka.png', height: 150),
-                  const Icon(size: 120, color: Colors.blue, Icons.person),
-
-                  const SizedBox(height: 20),
-
-//Załóż konto
-                  Text(
-                    'Wypełnij poniższe pola!',
-                    style: TextStyle(
+                    Icon(
+                      size: 120,
                       color: Colors.grey[700],
-                      fontSize: 16,
+                      Icons.person,
                     ),
-                  ),
 
-                  const SizedBox(height: 25),
+                    const SizedBox(height: 20),
 
-//imię i nazwisko
-                  MyTextField(
-                    maxLines: 1,
-                    controller: userNameController,
-                    hintText: 'Imie i nazwisko',
-                    obscureText: false,
-                  ),
-
-                  const SizedBox(height: 10),
-
-//imię dziecka
-                  MyTextField(
-                    maxLines: 1,
-                    controller: kidNameController,
-                    hintText: 'Imię dziecka',
-                    obscureText: false,
-                  ),
-
-                  const SizedBox(height: 10),
-
-//pole email
-                  MyTextField(
-                    maxLines: 1,
-                    controller: emailController,
-                    hintText: 'Email',
-                    obscureText: false,
-                  ),
-
-                  const SizedBox(height: 10),
-
-//pole hasła
-                  MyTextField(
-                    maxLines: 1,
-                    controller: passwordController,
-                    hintText: 'Hasło',
-                    obscureText: true, //ukrywa hasło pod kropkami
-                  ),
-
-                  const SizedBox(height: 10),
-
-//pole hasła
-                  MyTextField(
-                    maxLines: 1,
-                    controller: confirmPwdController,
-                    hintText: 'Potwierdź hasło',
-                    obscureText: true, //ukrywa hasło pod kropkami
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // //zapomniałeś hasła?
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     children: [
-                  //       Text(
-                  //         'Przypomnij hasło',
-                  //         style: TextStyle(color: Colors.grey[600]),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-
-                  // const SizedBox(height: 25),
-
-//zaloguj się btn
-                  MyLogRegButton(
-                    text: 'Zarejestruj',
-                    onTap: signIn,
-                  ),
-
-                  const SizedBox(height: 40),
-
-                  // //lub zaloguj się przez
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: Row(
-                  //     children: [
-                  //       Expanded(
-                  //         child: Divider(
-                  //           thickness: 0.5,
-                  //           color: Colors.grey[400],
-                  //         ),
-                  //       ),
-                  //       Padding(
-                  //         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  //         child: Text(
-                  //           'lub zaloguj się przez',
-                  //           style: TextStyle(
-                  //             color: Colors.grey[700],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       Expanded(
-                  //         child: Divider(
-                  //           thickness: 0.5,
-                  //           color: Colors.grey[400],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-
-                  // const SizedBox(height: 40),
-
-                  // //google + apple sing in btn
-                  // const Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     //google
-                  //     SquareTile(imagePath: 'assets/images/Google_Icon.png'),
-
-                  //     SizedBox(width: 10),
-                  //     //apple
-                  //     SquareTile(imagePath: 'assets/images/Apple_Icon.png')
-                  //   ],
-                  // ),
-
-                  // const SizedBox(height: 40),
-
-//zarejestruj się
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Załóż konto!',
-                        style: TextStyle(color: Colors.grey[700]),
+//sign up title
+                    Text(
+                      'Wypełnij poniższe pola!',
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 16,
                       ),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: const Text(
-                          'Zaloguj się!',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
+                    ),
+
+                    const SizedBox(height: 25),
+
+//names
+                    MyTextField(
+                      maxLines: 1,
+                      controller: userNameController,
+                      hintText: 'Imie i nazwisko',
+                      obscureText: false,
+                    ),
+
+                    const SizedBox(height: 10),
+
+//kid name
+                    // MyTextField(
+                    //   maxLines: 1,
+                    //   controller: kidNameController,
+                    //   hintText: 'Imię dziecka',
+                    //   obscureText: false,
+                    // ),
+
+                    // const SizedBox(height: 10),
+
+//email field
+                    MyTextField(
+                      maxLines: 1,
+                      controller: emailController,
+                      hintText: 'Email',
+                      obscureText: false,
+                    ),
+
+                    const SizedBox(height: 10),
+
+//password field
+                    MyTextField(
+                      maxLines: 1,
+                      controller: passwordController,
+                      hintText: 'Hasło',
+                      obscureText: true, //ukrywa hasło pod kropkami
+                    ),
+
+                    const SizedBox(height: 10),
+
+//confirm password field
+                    MyTextField(
+                      maxLines: 1,
+                      controller: confirmPwdController,
+                      hintText: 'Potwierdź hasło',
+                      obscureText: true, //ukrywa hasło pod kropkami
+                    ),
+
+                    const SizedBox(height: 20),
+
+//sign up btn
+                    MyLogRegButton(
+                      text: 'Zarejestruj',
+                      onTap: signIn,
+                    ),
+
+                    const SizedBox(height: 40),
+
+//sign up toggle
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Załóż konto!',
+                          style: TextStyle(color: Colors.grey[500]),
+                        ),
+                        const SizedBox(width: 4),
+                        GestureDetector(
+                          onTap: widget.onTap,
+                          child: Text(
+                            'Zaloguj się!',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

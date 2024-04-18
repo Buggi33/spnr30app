@@ -13,11 +13,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  //text editing controller
+//text editing controller
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  //sign user in method
+//sign user in method
   void logIn() async {
     //show loading circle
     showDialog(
@@ -28,7 +28,7 @@ class _LoginPage extends State<LoginPage> {
         );
       },
     );
-    //try to log in
+//try to log in
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
@@ -44,7 +44,7 @@ class _LoginPage extends State<LoginPage> {
     }
   }
 
-  //wrong email message to user
+//wrong email message to user
   void showErrorMessage(String message) {
     showDialog(
       context: context,
@@ -70,17 +70,17 @@ class _LoginPage extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //logo
-                // Image.asset('assets/images/sloneczka.png', height: 150),
-                const Icon(
+//logo
+// Image.asset('assets/images/sloneczka.png', height: 150),
+                Icon(
                   Icons.lock,
                   size: 120,
-                  color: Colors.blue,
+                  color: Colors.grey[700],
                 ),
 
                 const SizedBox(height: 20),
 
-                //witaj spowrotem, tęskniliśmy
+//welcome title
                 Text(
                   'Witaj w SPNR30!',
                   style: TextStyle(
@@ -91,43 +91,57 @@ class _LoginPage extends State<LoginPage> {
 
                 const SizedBox(height: 25),
 
-                //pole użytkownika
-                MyTextField(
-                  maxLines: 1,
-                  controller: emailController,
-                  hintText: 'Nazwa użytkownika',
-                  obscureText: false,
-                ),
-
-                const SizedBox(height: 10),
-
-                //pole hasła
-                MyTextField(
-                  maxLines: 1,
-                  controller: passwordController,
-                  hintText: 'Hasło',
-                  obscureText: true, //ukrywa hasło pod kropkami
-                ),
-
-                const SizedBox(height: 10),
-
-                //zapomniałeś hasła?
+//email field
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Przypomnij hasło',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    top: 5,
+                    right: 20,
+                    bottom: 5,
+                  ),
+                  child: MyTextField(
+                    maxLines: 1,
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
                   ),
                 ),
 
+//pole hasła
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    top: 5,
+                    right: 20,
+                    bottom: 5,
+                  ),
+                  child: MyTextField(
+                    maxLines: 1,
+                    controller: passwordController,
+                    hintText: 'Hasło',
+                    obscureText: true, //ukrywa hasło pod kropkami
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+//zapomniałeś hasła?
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: [
+                //       Text(
+                //         'Przypomnij hasło',
+                //         style: TextStyle(color: Colors.grey[600]),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+
                 const SizedBox(height: 25),
 
-                //zaloguj się btn
+//zaloguj się btn
                 MyLogRegButton(
                   text: 'Zaloguj',
                   onTap: logIn,
@@ -135,7 +149,7 @@ class _LoginPage extends State<LoginPage> {
 
                 const SizedBox(height: 40),
 
-                // //lub zaloguj się przez
+// //lub zaloguj się przez
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 //   child: Row(
@@ -182,21 +196,21 @@ class _LoginPage extends State<LoginPage> {
 
                 // const SizedBox(height: 40),
 
-                //zarejestruj się
+//zarejestruj się
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Załóż konto!',
-                      style: TextStyle(color: Colors.grey[700]),
+                      style: TextStyle(color: Colors.grey[500]),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: const Text(
+                      child: Text(
                         'Zarejestruj się!',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.grey[600],
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -1,13 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spnr30app/components/my_checkbox_frogs_button.dart';
 import 'package:spnr30app/components/my_checkbox_owls_button.dart';
 import 'package:spnr30app/components/my_checkbox_suns_button.dart';
 import 'package:spnr30app/components/my_textfield.dart';
+import 'package:spnr30app/providers/checkbox_provider.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({
+    super.key,
+  });
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -27,11 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isSwitchedOwls = false;
   bool isSwitchedFrogs = false;
 
-//checkbox bool
-  bool _isChecked1 = false;
-  bool _isChecked2 = false;
-  bool _isChecked3 = false;
-
   @override
   void initState() {
     super.initState();
@@ -43,44 +43,21 @@ class _ProfilePageState extends State<ProfilePage> {
 //-------------------------------SUNS FUNCTION------------------------------
 //funkcja porównująca dwie wartości
   void compareSunsPasswords() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       if (_pwdTxtController1.text.isNotEmpty) {
         try {
-//store in firebase
-          await FirebaseFirestore.instance
-              .collection('Users')
-              .doc(currentUser.email)
-              .update({
-            'sunsPassword': _pwdTxtController1.text,
-          });
-          print('Dane dodane do bazy');
-
+          String sPw = _pwdTxtController1.text;
+          prefs.setString('sPw', sPw);
+          print('Dodane do bazy: $sPw');
           _pwdTxtController1.clear();
         } catch (e) {
           print('Błąd: $e');
         }
       }
-// Pobierz referencję do pierwszego dokumentu w pierwszej kolekcji
-      DocumentSnapshot firstDocSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(currentUser.email)
-          .get();
-// Pobierz wartość z dokumentu
-      String firstValue = firstDocSnapshot['sunsPassword'];
-
-// Pobierz referencję do drugiego dokumentu w drugiej kolekcji
-      DocumentSnapshot secondDocSnapshot = await FirebaseFirestore.instance
-          .collection('GroupsPassword')
-          .doc('passwordsID')
-          .get();
-// Pobierz wartość z dokumentu
-      String secondValue = secondDocSnapshot['suns'];
-
-      print('firstValue : $firstValue');
-      print('secondValue : $secondValue');
-
+      String? sPwSaved = prefs.getString('sPw');
 // Porównaj obydwie wartości
-      if (firstValue == secondValue) {
+      if (sPwSaved == 'sunsEmpire') {
         print('Wartości są takie same.');
         setState(() {
           isSwitchedSuns = true;
@@ -89,6 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Wartości są różne.');
         isSwitchedSuns = false;
       }
+      // Zapisz aktualne wartości do SharedPreferences
     } catch (e) {
       print('Błąd: $e');
     }
@@ -97,44 +75,21 @@ class _ProfilePageState extends State<ProfilePage> {
 //-------------------------------OWLS FUNCTION-----------------------------
 //funkcja porównująca dwie wartości
   void compareOwlsPasswords() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       if (_pwdTxtController2.text.isNotEmpty) {
         try {
-//store in firebase
-          await FirebaseFirestore.instance
-              .collection('Users')
-              .doc(currentUser.email)
-              .update({
-            'owlsPassword': _pwdTxtController2.text,
-          });
-          print('Dane dodane do bazy');
-
+          String oPw = _pwdTxtController2.text;
+          prefs.setString('oPw', oPw);
+          print('Dodane do bazy: $oPw');
           _pwdTxtController2.clear();
         } catch (e) {
           print('Błąd: $e');
         }
       }
-// Pobierz referencję do pierwszego dokumentu w pierwszej kolekcji
-      DocumentSnapshot firstDocSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(currentUser.email)
-          .get();
-// Pobierz wartość z dokumentu
-      String firstValue = firstDocSnapshot['owlsPassword'];
-
-// Pobierz referencję do drugiego dokumentu w drugiej kolekcji
-      DocumentSnapshot secondDocSnapshot = await FirebaseFirestore.instance
-          .collection('GroupsPassword')
-          .doc('passwordsID')
-          .get();
-// Pobierz wartość z dokumentu
-      String secondValue = secondDocSnapshot['owls'];
-
-      print('firstValue : $firstValue');
-      print('secondValue : $secondValue');
-
+      String? oPwSaved = prefs.getString('oPw');
 // Porównaj obydwie wartości
-      if (firstValue == secondValue) {
+      if (oPwSaved == 'owlsForest') {
         print('Wartości są takie same.');
         setState(() {
           isSwitchedOwls = true;
@@ -143,6 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Wartości są różne.');
         isSwitchedOwls = false;
       }
+      // Zapisz aktualne wartości do SharedPreferences
     } catch (e) {
       print('Błąd: $e');
     }
@@ -151,44 +107,21 @@ class _ProfilePageState extends State<ProfilePage> {
 //-------------------------------FROGS FUNCTION----------------------------
 //funkcja porównująca dwie wartości
   void compareFrogsPasswords() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       if (_pwdTxtController3.text.isNotEmpty) {
         try {
-//store in firebase
-          await FirebaseFirestore.instance
-              .collection('Users')
-              .doc(currentUser.email)
-              .update({
-            'frogsPassword': _pwdTxtController3.text,
-          });
-          print('Dane dodane do bazy');
-
+          String fPw = _pwdTxtController3.text;
+          prefs.setString('fPw', fPw);
+          print('Dodane do bazy: $fPw');
           _pwdTxtController3.clear();
         } catch (e) {
           print('Błąd: $e');
         }
       }
-// Pobierz referencję do pierwszego dokumentu w pierwszej kolekcji
-      DocumentSnapshot firstDocSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(currentUser.email)
-          .get();
-      // Pobierz wartość z dokumentu
-      String firstValue = firstDocSnapshot['frogsPassword'];
-
-// Pobierz referencję do drugiego dokumentu w drugiej kolekcji
-      DocumentSnapshot secondDocSnapshot = await FirebaseFirestore.instance
-          .collection('GroupsPassword')
-          .doc('passwordsID')
-          .get();
-// Pobierz wartość z dokumentu
-      String secondValue = secondDocSnapshot['frogs'];
-
-      print('firstValue : $firstValue');
-      print('secondValue : $secondValue');
-
+      String? fPwSaved = prefs.getString('fPw');
 // Porównaj obydwie wartości
-      if (firstValue == secondValue) {
+      if (fPwSaved == 'frogsLake') {
         print('Wartości są takie same.');
         setState(() {
           isSwitchedFrogs = true;
@@ -197,6 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Wartości są różne.');
         isSwitchedFrogs = false;
       }
+      // Zapisz aktualne wartości do SharedPreferences
     } catch (e) {
       print('Błąd: $e');
     }
@@ -204,8 +138,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final checkboxProvider = Provider.of<CheckboxProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.grey[700],
+        backgroundColor: Colors.white,
         shadowColor: Colors.black,
         elevation: 5,
         centerTitle: true,
@@ -237,24 +175,27 @@ class _ProfilePageState extends State<ProfilePage> {
                         const Icon(
                           Icons.emoji_people,
                           size: 100,
+                          color: Colors.grey,
                         ),
                         const SizedBox(height: 30),
 //username
                         Text(
                           userData['username'],
+                          style: TextStyle(color: Colors.grey[700]),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 10),
 //kidname
-                        Text(
-                          userData['kidname'],
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 10),
+                        // Text(
+                        //   userData['kidname'],
+                        //   textAlign: TextAlign.center,
+                        // ),
+                        // const SizedBox(height: 10),
 //email
                         Text(
                           currentUser.email!,
                           textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.grey[700]),
                         ),
                         const SizedBox(height: 60),
                       ],
@@ -285,7 +226,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 180,
                           child: MyCheckboxSunsButton(
                             isSwitchedSuns: isSwitchedSuns,
-                            value: _isChecked1,
                             title: SizedBox(
                               height: 30,
                               child: Align(
@@ -293,10 +233,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Image.asset(
                                       'assets/images/sloneczka.png')),
                             ),
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                _isChecked1 = newValue!;
-                              });
+                            value: checkboxProvider.isCheckedSuns,
+                            onChanged: (newValue) {
+                              checkboxProvider.toggleCBSuns();
                             },
                           ),
                         ),
@@ -323,7 +262,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.grey[400],
                             ),
-                            child: const Icon(Icons.done, size: 30),
+                            child: const Icon(
+                              color: Colors.white,
+                              Icons.done,
+                              size: 30,
+                            ),
                           ),
                         ),
                       )
@@ -344,17 +287,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: 180,
                       child: MyCheckboxFrogsButton(
                         isSwitchedFrogs: isSwitchedOwls,
-                        value: _isChecked2,
                         title: SizedBox(
                           height: 30,
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Image.asset('assets/images/sowki.png')),
                         ),
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            _isChecked2 = newValue!;
-                          });
+                        value: checkboxProvider.isCheckedOwls,
+                        onChanged: (newValue) {
+                          checkboxProvider.toggleCBOwls();
                         },
                       ),
                     ),
@@ -381,7 +322,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(8),
                           color: Colors.grey[400],
                         ),
-                        child: const Icon(Icons.done, size: 30),
+                        child: const Icon(
+                          color: Colors.white,
+                          Icons.done,
+                          size: 30,
+                        ),
                       ),
                     ),
                   )
@@ -400,17 +345,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: 180,
                       child: MyCheckboxOwlsButton(
                         isSwitchedOwls: isSwitchedFrogs,
-                        value: _isChecked3,
                         title: SizedBox(
                           height: 30,
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Image.asset('assets/images/zabki.png')),
                         ),
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            _isChecked3 = newValue!;
-                          });
+                        value: checkboxProvider.isCheckedFrogs,
+                        onChanged: (newValue) {
+                          checkboxProvider.toggleCBFrogs();
                         },
                       ),
                     ),
@@ -437,7 +380,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(8),
                           color: Colors.grey[400],
                         ),
-                        child: const Icon(Icons.done, size: 30),
+                        child: const Icon(
+                          color: Colors.white,
+                          Icons.done,
+                          size: 30,
+                        ),
                       ),
                     ),
                   )

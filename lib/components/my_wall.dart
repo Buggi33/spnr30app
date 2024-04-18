@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:spnr30app/components/my_comment_button.dart';
 import 'package:spnr30app/components/my_delete_button.dart';
 import 'package:spnr30app/components/my_like_button.dart';
@@ -54,6 +53,33 @@ class _MyWallState extends State<MyWall> {
     }
   }
 
+  Stream<QuerySnapshot> _getCommentsStream() {
+    if (widget.group == 'Słoneczka') {
+      return FirebaseFirestore.instance
+          .collection('SunsPosts')
+          .doc(widget.postId)
+          .collection('Comments')
+          .orderBy("CommentTime", descending: false)
+          .snapshots();
+    } else if (widget.group == 'Sówki') {
+      return FirebaseFirestore.instance
+          .collection('OwlsPosts')
+          .doc(widget.postId)
+          .collection('Comments')
+          .orderBy("CommentTime", descending: false)
+          .snapshots();
+    } else if (widget.group == 'Żabki') {
+      return FirebaseFirestore.instance
+          .collection('FrogsPosts')
+          .doc(widget.postId)
+          .collection('Comments')
+          .orderBy("CommentTime", descending: false)
+          .snapshots();
+    }
+    // Domyślnie zwracamy pusty strumień, jeśli nie pasuje do żadnej grupy
+    return const Stream.empty();
+  }
+
 //initialize the status of actual statewidget
   @override
   void initState() {
@@ -61,31 +87,69 @@ class _MyWallState extends State<MyWall> {
     isLiked = widget.likes.contains(currentUser.email);
   }
 
+//--------------------------A D D I N G   L I K E S----------------------------
+//---------------------------------S U N S-------------------------------------
 //toggle the Likes
   void toggleLike() {
     setState(() {
       isLiked = !isLiked;
     });
-
-//access the document
-    DocumentReference postRef =
-        FirebaseFirestore.instance.collection('Posts').doc(widget.postId);
+//access the document of SunsPosts
+    DocumentReference sunsPostRef =
+        FirebaseFirestore.instance.collection('SunsPosts').doc(widget.postId);
 
     if (isLiked) {
 //if the post is now liked, add current email to the 'Likes' collection
-      postRef.update({
+      sunsPostRef.update({
         'Likes': FieldValue.arrayUnion([currentUser.email])
       });
     } else {
 //if the post is now unliked, remove current email from 'Likes' collection
-      postRef.update({
+      sunsPostRef.update({
+        'Likes': FieldValue.arrayRemove([currentUser.email])
+      });
+    }
+
+//---------------------------------O W L S-------------------------------------
+//access the document of SunsPosts
+    DocumentReference owlsPostRef =
+        FirebaseFirestore.instance.collection('OwlsPosts').doc(widget.postId);
+
+    if (isLiked) {
+//if the post is now liked, add current email to the 'Likes' collection
+      owlsPostRef.update({
+        'Likes': FieldValue.arrayUnion([currentUser.email])
+      });
+    } else {
+//if the post is now unliked, remove current email from 'Likes' collection
+      owlsPostRef.update({
+        'Likes': FieldValue.arrayRemove([currentUser.email])
+      });
+    }
+
+//---------------------------------F R O G S-----------------------------------
+
+//access the document of SunsPosts
+    DocumentReference frogsPostRef =
+        FirebaseFirestore.instance.collection('FrogsPosts').doc(widget.postId);
+
+    if (isLiked) {
+//if the post is now liked, add current email to the 'Likes' collection
+      frogsPostRef.update({
+        'Likes': FieldValue.arrayUnion([currentUser.email])
+      });
+    } else {
+//if the post is now unliked, remove current email from 'Likes' collection
+      frogsPostRef.update({
         'Likes': FieldValue.arrayRemove([currentUser.email])
       });
     }
   }
 
+//----------------------------A D D  C O M M E N T S---------------------------
+//----------------------------------S U N S------------------------------------
 //add a comment
-  Future<void> addComment(String commentText) async {
+  Future<void> addSunsComment(String commentText) async {
     DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentUser.email)
@@ -94,9 +158,9 @@ class _MyWallState extends State<MyWall> {
       String username =
           (userSnapshot.data() as Map<String, dynamic>)['username'];
 
-      //write comment to firestore as Comment collection
+//write comment to firestore as Comment collection
       FirebaseFirestore.instance
-          .collection('Posts')
+          .collection('SunsPosts')
           .doc(widget.postId)
           .collection("Comments")
           .add({
@@ -108,6 +172,57 @@ class _MyWallState extends State<MyWall> {
     }
   }
 
+//----------------------------------O W L S------------------------------------
+//add a comment
+  Future<void> addOwlsComment(String commentText) async {
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentUser.email)
+        .get();
+    if (userSnapshot.exists) {
+      String username =
+          (userSnapshot.data() as Map<String, dynamic>)['username'];
+
+//write comment to firestore as Comment collection
+      FirebaseFirestore.instance
+          .collection('OwlsPosts')
+          .doc(widget.postId)
+          .collection("Comments")
+          .add({
+        "CommentText": commentText,
+        "CommentedBy": username,
+        "CommentEmail": currentUser.email,
+        "CommentTime": Timestamp.now(),
+      });
+    }
+  }
+
+//---------------------------------F R O G S-----------------------------------
+//add a comment
+  Future<void> addFrogsComment(String commentText) async {
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentUser.email)
+        .get();
+    if (userSnapshot.exists) {
+      String username =
+          (userSnapshot.data() as Map<String, dynamic>)['username'];
+
+//write comment to firestore as Comment collection
+      FirebaseFirestore.instance
+          .collection('FrogsPosts')
+          .doc(widget.postId)
+          .collection("Comments")
+          .add({
+        "CommentText": commentText,
+        "CommentedBy": username,
+        "CommentEmail": currentUser.email,
+        "CommentTime": Timestamp.now(),
+      });
+    }
+  }
+
+//-----------------------------------------------------------------------------
 //show a dialog box for adding comment
   void showCommentDialog() {
     showDialog(
@@ -122,7 +237,13 @@ class _MyWallState extends State<MyWall> {
 //add comment button
           TextButton(
             onPressed: () {
-              addComment(_commentTextController.text);
+              if (widget.group == "Słoneczka") {
+                addSunsComment(_commentTextController.text);
+              } else if (widget.group == "Sówki") {
+                addOwlsComment(_commentTextController.text);
+              } else if (widget.group == "Żabki") {
+                addFrogsComment(_commentTextController.text);
+              }
               //pop box
               Navigator.pop(context);
               //clear textfild/controller
@@ -151,8 +272,10 @@ class _MyWallState extends State<MyWall> {
     );
   }
 
+//---------------------------D E L E T I N G  P O S T S------------------------
+//----------------------------------S U N S------------------------------------
 //delete the post
-  void deletePost() async {
+  void deleteSunsPost() async {
 //show dialog box to confirm delete
     showDialog(
       context: context,
@@ -165,14 +288,14 @@ class _MyWallState extends State<MyWall> {
             onPressed: () async {
 //delete the comments from firestore as first
               final commentDocs = await FirebaseFirestore.instance
-                  .collection("Posts")
+                  .collection("SunsPosts")
                   .doc(widget.postId)
                   .collection("Comments")
                   .get();
 
               for (var doc in commentDocs.docs) {
                 await FirebaseFirestore.instance
-                    .collection('Posts')
+                    .collection('SunsPosts')
                     .doc(widget.postId)
                     .collection('Comments')
                     .doc(doc.id)
@@ -180,7 +303,7 @@ class _MyWallState extends State<MyWall> {
               }
 //delete the post from firestore as second
               FirebaseFirestore.instance
-                  .collection("Posts")
+                  .collection("SunsPosts")
                   .doc(widget.postId)
                   .delete();
 //pop box
@@ -208,11 +331,132 @@ class _MyWallState extends State<MyWall> {
     // print('Nazwa użytkownika postu "widget.email": ${widget.email}');
   }
 
+//----------------------------------O W L S------------------------------------
+//delete the post
+  void deleteOwlsPost() async {
+//show dialog box to confirm delete
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Usuń Post'),
+        content: const Text('Czy na pewno chcesz usunąć post?'),
+        actions: [
+//delete button
+          TextButton(
+            onPressed: () async {
+//delete the comments from firestore as first
+              final commentDocs = await FirebaseFirestore.instance
+                  .collection("OwlsPosts")
+                  .doc(widget.postId)
+                  .collection("Comments")
+                  .get();
+
+              for (var doc in commentDocs.docs) {
+                await FirebaseFirestore.instance
+                    .collection('OwlsPosts')
+                    .doc(widget.postId)
+                    .collection('Comments')
+                    .doc(doc.id)
+                    .delete();
+              }
+//delete the post from firestore as second
+              FirebaseFirestore.instance
+                  .collection("OwlsPosts")
+                  .doc(widget.postId)
+                  .delete();
+//pop box
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "Usuń",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+//cancel button
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              "Anuluj",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+//---------------------------------F R O G S-----------------------------------
+//delete the post
+  void deleteFrogsPost() async {
+//show dialog box to confirm delete
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Usuń Post'),
+        content: const Text('Czy na pewno chcesz usunąć post?'),
+        actions: [
+//delete button
+          TextButton(
+            onPressed: () async {
+//delete the comments from firestore as first
+              final commentDocs = await FirebaseFirestore.instance
+                  .collection("FrogsPosts")
+                  .doc(widget.postId)
+                  .collection("Comments")
+                  .get();
+
+              for (var doc in commentDocs.docs) {
+                await FirebaseFirestore.instance
+                    .collection('FrogsPosts')
+                    .doc(widget.postId)
+                    .collection('Comments')
+                    .doc(doc.id)
+                    .delete();
+              }
+//delete the post from firestore as second
+              FirebaseFirestore.instance
+                  .collection("FrogsPosts")
+                  .doc(widget.postId)
+                  .delete();
+//pop box
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "Usuń",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+//cancel button
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              "Anuluj",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+//------------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
 //get from firebase all comments for counting comments
-    Stream<QuerySnapshot> countStream = FirebaseFirestore.instance
-        .collection('Posts')
+    Stream<QuerySnapshot> countSunsStream = FirebaseFirestore.instance
+        .collection('SunsPosts')
+        .doc(widget.postId)
+        .collection('Comments')
+        .snapshots();
+//get from firebase all comments for counting comments
+    Stream<QuerySnapshot> countOwlsStream = FirebaseFirestore.instance
+        .collection('OwlsPosts')
+        .doc(widget.postId)
+        .collection('Comments')
+        .snapshots();
+//get from firebase all comments for counting comments
+    Stream<QuerySnapshot> countFrogsStream = FirebaseFirestore.instance
+        .collection('FrogsPosts')
         .doc(widget.postId)
         .collection('Comments')
         .snapshots();
@@ -286,7 +530,15 @@ class _MyWallState extends State<MyWall> {
               if (currentUser.email == widget.email)
                 MyDeleteButton(
                   size: 23,
-                  onTap: deletePost,
+                  onTap: () {
+                    if (widget.group == "Słoneczka") {
+                      deleteSunsPost();
+                    } else if (widget.group == "Sówki") {
+                      deleteOwlsPost();
+                    } else if (widget.group == "Żabki") {
+                      deleteFrogsPost();
+                    }
+                  },
                 ),
             ],
           ),
@@ -320,23 +572,63 @@ class _MyWallState extends State<MyWall> {
                     onTap: showCommentDialog,
                   ),
 //comment count
-                  StreamBuilder(
-                    stream: countStream,
-                    builder: ((context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const Text('No Data');
-                      }
-                      int docCount = snapshot.data != null
-                          ? snapshot.data!.docs.length
-                          : 0;
-                      return Text(
-                        docCount.toString(),
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                        ),
-                      );
-                    }),
-                  ),
+//StreamBuilder dla Słoneczka
+                  if (widget.group == 'Słoneczka')
+                    StreamBuilder(
+                      stream: countSunsStream,
+                      builder: ((context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('No Data');
+                        }
+                        int docCount = snapshot.data != null
+                            ? snapshot.data!.docs.length
+                            : 0;
+                        return Text(
+                          docCount.toString(),
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
+                        );
+                      }),
+                    ),
+//StreamBuilder dla Sówki
+                  if (widget.group == 'Sówki')
+                    StreamBuilder(
+                      stream: countOwlsStream,
+                      builder: ((context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('No Data');
+                        }
+                        int docCount = snapshot.data != null
+                            ? snapshot.data!.docs.length
+                            : 0;
+                        return Text(
+                          docCount.toString(),
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
+                        );
+                      }),
+                    ),
+//StreamBuilder dla Żabki
+                  if (widget.group == 'Żabki')
+                    StreamBuilder(
+                      stream: countFrogsStream,
+                      builder: ((context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('No Data');
+                        }
+                        int docCount = snapshot.data != null
+                            ? snapshot.data!.docs.length
+                            : 0;
+                        return Text(
+                          docCount.toString(),
+                          style: TextStyle(
+                            color: Colors.grey[500],
+                          ),
+                        );
+                      }),
+                    ),
                 ],
               ),
             ],
@@ -344,12 +636,14 @@ class _MyWallState extends State<MyWall> {
           const SizedBox(height: 5),
 // showing comment under the post
           StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('Posts')
-                .doc(widget.postId)
-                .collection('Comments')
-                .orderBy("CommentTime", descending: false)
-                .snapshots(),
+            stream: _getCommentsStream()
+            // FirebaseFirestore.instance
+            //     .collection('Posts')
+            //     .doc(widget.postId)
+            //     .collection('Comments')
+            //     .orderBy("CommentTime", descending: false)
+            //     .snapshots()
+            ,
             builder: (context, snapshot) {
 //showing the loading circle if no date
               if (!snapshot.hasData) {

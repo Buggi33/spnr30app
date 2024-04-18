@@ -25,7 +25,7 @@ class MyCheckboxOwlsButton extends StatelessWidget {
               style: TextStyle(color: Colors.green[400]),
             ),
             activeColor: Colors.grey,
-            checkColor: Colors.black,
+            checkColor: Colors.white,
             tileColor: Colors.grey[200],
             controlAffinity: ListTileControlAffinity.leading,
             title: title,
