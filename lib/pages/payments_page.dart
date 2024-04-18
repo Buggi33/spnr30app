@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:spnr30app/components/my_payement_field.dart';
 
 class PaymentsPage extends StatefulWidget {
@@ -11,13 +10,16 @@ class PaymentsPage extends StatefulWidget {
   State<PaymentsPage> createState() => _PaymentsPageState();
 }
 
-final currentUser = FirebaseAuth.instance.currentUser!;
-final Stream<QuerySnapshot> contractsStream = FirebaseFirestore.instance
-    .collection('Contracts')
-    .orderBy('ID', descending: false)
-    .snapshots();
-
 class _PaymentsPageState extends State<PaymentsPage> {
+  final _searchController = TextEditingController();
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  String searchResults = '';
+
+  final Stream<QuerySnapshot> contractsStream = FirebaseFirestore.instance
+      .collection('Contracts')
+      .orderBy('ID', descending: false)
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +47,12 @@ class _PaymentsPageState extends State<PaymentsPage> {
               boxShadow: const [
                 BoxShadow(
                   color: Colors.grey,
-                  offset: Offset(4, 4),
+                  offset: Offset(0, 4),
                   blurRadius: 15,
                   spreadRadius: 5,
                 ),
               ],
-              color: Colors.grey[300],
+              color: Colors.grey[350],
             ),
             padding:
                 const EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 5),
@@ -83,10 +85,17 @@ class _PaymentsPageState extends State<PaymentsPage> {
                 }
                 final List<QueryDocumentSnapshot> contracts =
                     snapshot.data!.docs;
+
+                List<QueryDocumentSnapshot> filteredContracts =
+                    contracts.where((contract) {
+                  final contractNumber = contract.id.toLowerCase();
+                  return contractNumber.contains(searchResults.toLowerCase());
+                }).toList();
+
                 return ListView.builder(
-                  itemCount: contracts.length,
+                  itemCount: filteredContracts.length,
                   itemBuilder: (_, index) {
-                    final contract = contracts[index];
+                    final contract = filteredContracts[index];
                     return MyPaymentField(
                       contractNumber: contract.id,
                       payment: contract['Payment'],
@@ -97,6 +106,48 @@ class _PaymentsPageState extends State<PaymentsPage> {
               },
             ),
           ),
+          Container(
+              height: 60,
+              decoration: BoxDecoration(
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0, 4),
+                    blurRadius: 15,
+                    spreadRadius: 5,
+                  ),
+                ],
+                color: Colors.grey[300],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 50, top: 10, right: 50, bottom: 10),
+                child: TextField(
+                  onChanged: (String value) {
+                    setState(() {
+                      searchResults = value;
+                    });
+                  },
+                  controller: _searchController,
+                  style: TextStyle(color: Colors.grey[700]),
+                  decoration: InputDecoration(
+                    hintText: 'Wyszukaj..',
+                    fillColor: Colors.grey[400],
+                    contentPadding: const EdgeInsets.all(0),
+                    prefixIcon: const Icon(
+                        color: Colors.white, Icons.search), //padding inside
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: BorderSide.none, //none underline
+                    ),
+                    hintStyle: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 15,
+                    ),
+                    filled: true,
+                  ),
+                ),
+              )),
         ],
       ),
     );
