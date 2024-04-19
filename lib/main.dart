@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spnr30app/firebase_options.dart';
 import 'package:spnr30app/pages/admin_payments_page.dart';
+import 'package:spnr30app/pages/contact_page.dart';
 import 'package:spnr30app/pages/home_page.dart';
 import 'package:spnr30app/pages/profile_page.dart';
 import 'package:spnr30app/pages/payments_page.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: const AuthPage(),
         routes: {
+          '/contact_page': (context) => const ContactPage(),
           '/home_page': (context) => const HomePage(),
           '/profile_page': (context) => const ProfilePage(),
           '/users_page': (context) => const PaymentsPage(),

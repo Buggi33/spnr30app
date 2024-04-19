@@ -31,14 +31,14 @@ class MyDrawer extends StatelessWidget {
 //HOME (created by my_list_tile)
               const SizedBox(height: 10),
               MyListTile(
-                icon: Icons.home,
+                icon: Icons.home_outlined,
                 text: "H O M E",
                 onTap: () => Navigator.pop(context),
               ),
               const SizedBox(height: 10),
 //PROFIL (created by my_list_tile)
               MyListTile(
-                  icon: Icons.person,
+                  icon: Icons.person_outlined,
                   text: "P R O F I L",
                   onTap: () {
                     //pop drawer
@@ -56,6 +56,17 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     //navigate to profil page
                     Navigator.pushNamed(context, '/users_page');
+                  }),
+//CONTACT (created by my_list_tile)
+              const SizedBox(height: 10),
+              MyListTile(
+                  icon: Icons.contact_support_outlined,
+                  text: "K O N T A K T",
+                  onTap: () {
+                    //pop drawer
+                    Navigator.pop(context);
+                    //navigate to profil page
+                    Navigator.pushNamed(context, '/contact_page');
                   }),
             ],
           ),
