@@ -26,17 +26,17 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
       items: [
         DropdownMenuItem<String>(
           alignment: Alignment.bottomCenter,
-          value: "Słoneczka",
+          value: "Suns",
           child: Image.asset('assets/images/sloneczka.png'),
         ),
         DropdownMenuItem<String>(
           alignment: Alignment.bottomCenter,
-          value: "Sówki",
+          value: "Owls",
           child: Image.asset('assets/images/sowki.png'),
         ),
         DropdownMenuItem<String>(
           alignment: Alignment.bottomCenter,
-          value: "Żabki",
+          value: "Frogs",
           child: Align(child: Image.asset('assets/images/zabki.png')),
         ),
       ],

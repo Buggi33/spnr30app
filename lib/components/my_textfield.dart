@@ -8,6 +8,7 @@ class MyTextField extends StatelessWidget {
   final textInputAction;
   final maxLines;
   final onChanged;
+  final focusNode;
 
   const MyTextField({
     super.key,
@@ -18,11 +19,13 @@ class MyTextField extends StatelessWidget {
     this.textInputAction,
     this.maxLines,
     this.onChanged,
+    this.focusNode,
   });
 
   @override
   Widget build(context) {
     return TextField(
+      focusNode: focusNode,
       keyboardType: keybordType,
       textInputAction: textInputAction,
       maxLines: maxLines,

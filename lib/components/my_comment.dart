@@ -9,7 +9,8 @@ class MyComment extends StatefulWidget {
   final String time;
   final String postId;
   final String commentId;
-  final cmtEmail;
+  final String cmtEmail;
+  final String group;
   const MyComment({
     super.key,
     required this.text,
@@ -18,6 +19,7 @@ class MyComment extends StatefulWidget {
     required this.commentId,
     required this.postId,
     required this.cmtEmail,
+    required this.group,
   });
 
   @override
@@ -27,8 +29,10 @@ class MyComment extends StatefulWidget {
 class _MyCommentState extends State<MyComment> {
 //current user
   final currentUser = FirebaseAuth.instance.currentUser!;
-//delete the comment
-  void deleteComment() async {
+
+//---------------------------------DELETE COMMENTS------------------------------
+//-----------------------------------S U N S -----------------------------------
+  void deleteSunsComment() async {
 //show dialog box to confirm delete
     showDialog(
         context: context,
@@ -41,7 +45,7 @@ class _MyCommentState extends State<MyComment> {
                   onPressed: () async {
 //delete the comment from firestore
                     await FirebaseFirestore.instance
-                        .collection('Posts')
+                        .collection('SunsPosts')
                         .doc(widget.postId)
                         .collection('Comments')
                         .doc(widget.commentId)
@@ -66,6 +70,93 @@ class _MyCommentState extends State<MyComment> {
             ));
     // print('currentUser.email: ${currentUser.email}');
     // print('widget.email: ${widget.cmtEmail}');
+    print('widget.group: ${widget.group}');
+  }
+
+//---------------------------------DELETE COMMENTS------------------------------
+//-----------------------------------O W L S=-----------------------------------
+  void deleteOwlsComment() async {
+//show dialog box to confirm delete
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('Usuń komentarz'),
+              content: const Text('Czy na pewno chcesz usunąć komentarz?'),
+              actions: [
+//delete button
+                TextButton(
+                  onPressed: () async {
+//delete the comment from firestore
+                    await FirebaseFirestore.instance
+                        .collection('OwlsPosts')
+                        .doc(widget.postId)
+                        .collection('Comments')
+                        .doc(widget.commentId)
+                        .delete();
+//pop box
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Usuń',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+//cancel button
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text(
+                    "Anuluj",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ));
+    // print('currentUser.email: ${currentUser.email}');
+    // print('widget.email: ${widget.cmtEmail}');
+    print('widget.group: ${widget.group}');
+  }
+
+//---------------------------------DELETE COMMENTS------------------------------
+//-----------------------------------F R O G S----------------------------------
+  void deleteFrogsComment() async {
+//show dialog box to confirm delete
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('Usuń komentarz'),
+              content: const Text('Czy na pewno chcesz usunąć komentarz?'),
+              actions: [
+//delete button
+                TextButton(
+                  onPressed: () async {
+//delete the comment from firestore
+                    await FirebaseFirestore.instance
+                        .collection('FrogsPosts')
+                        .doc(widget.postId)
+                        .collection('Comments')
+                        .doc(widget.commentId)
+                        .delete();
+//pop box
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Usuń',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+//cancel button
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text(
+                    "Anuluj",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ));
+    // print('currentUser.email: ${currentUser.email}');
+    // print('widget.email: ${widget.cmtEmail}');
+    print('widget.group: ${widget.group}');
   }
 
   @override
@@ -114,9 +205,16 @@ class _MyCommentState extends State<MyComment> {
           ),
           if (currentUser.email == widget.cmtEmail)
             MyDeleteButton(
-              size: 18,
-              onTap: deleteComment,
-            )
+                size: 18,
+                onTap: () {
+                  if (widget.group == 'Suns') {
+                    deleteSunsComment();
+                  } else if (widget.group == 'Owls') {
+                    deleteOwlsComment();
+                  } else if (widget.group == 'Frogs') {
+                    deleteFrogsComment();
+                  }
+                }),
         ],
       ),
     );

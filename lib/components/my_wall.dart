@@ -42,11 +42,11 @@ class _MyWallState extends State<MyWall> {
 //color of groups
   Color getColorForGroup(String group) {
     switch (group) {
-      case 'Słoneczka':
+      case 'Suns':
         return Colors.yellow[800] ?? Colors.yellow;
-      case 'Sówki':
+      case 'Owls':
         return Colors.brown;
-      case 'Żabki':
+      case 'Frogs':
         return Colors.green;
       default:
         return Colors.black; // domyślny kolor
@@ -54,21 +54,21 @@ class _MyWallState extends State<MyWall> {
   }
 
   Stream<QuerySnapshot> _getCommentsStream() {
-    if (widget.group == 'Słoneczka') {
+    if (widget.group == 'Suns') {
       return FirebaseFirestore.instance
           .collection('SunsPosts')
           .doc(widget.postId)
           .collection('Comments')
           .orderBy("CommentTime", descending: false)
           .snapshots();
-    } else if (widget.group == 'Sówki') {
+    } else if (widget.group == 'Owls') {
       return FirebaseFirestore.instance
           .collection('OwlsPosts')
           .doc(widget.postId)
           .collection('Comments')
           .orderBy("CommentTime", descending: false)
           .snapshots();
-    } else if (widget.group == 'Żabki') {
+    } else if (widget.group == 'Frogs') {
       return FirebaseFirestore.instance
           .collection('FrogsPosts')
           .doc(widget.postId)
@@ -164,6 +164,7 @@ class _MyWallState extends State<MyWall> {
           .doc(widget.postId)
           .collection("Comments")
           .add({
+        "CommentGroup": widget.group,
         "CommentText": commentText,
         "CommentedBy": username,
         "CommentEmail": currentUser.email,
@@ -189,6 +190,7 @@ class _MyWallState extends State<MyWall> {
           .doc(widget.postId)
           .collection("Comments")
           .add({
+        "CommentGroup": widget.group,
         "CommentText": commentText,
         "CommentedBy": username,
         "CommentEmail": currentUser.email,
@@ -214,6 +216,7 @@ class _MyWallState extends State<MyWall> {
           .doc(widget.postId)
           .collection("Comments")
           .add({
+        "CommentGroup": widget.group,
         "CommentText": commentText,
         "CommentedBy": username,
         "CommentEmail": currentUser.email,
@@ -237,11 +240,11 @@ class _MyWallState extends State<MyWall> {
 //add comment button
           TextButton(
             onPressed: () {
-              if (widget.group == "Słoneczka") {
+              if (widget.group == "Suns") {
                 addSunsComment(_commentTextController.text);
-              } else if (widget.group == "Sówki") {
+              } else if (widget.group == "Owls") {
                 addOwlsComment(_commentTextController.text);
-              } else if (widget.group == "Żabki") {
+              } else if (widget.group == "Frogs") {
                 addFrogsComment(_commentTextController.text);
               }
               //pop box
@@ -461,6 +464,19 @@ class _MyWallState extends State<MyWall> {
         .collection('Comments')
         .snapshots();
 
+    String groupName = '';
+
+    if (widget.group == 'Suns') {
+      groupName = 'Słoneczka';
+    } else if (widget.group == 'Owls') {
+      groupName = 'Sówki';
+    } else if (widget.group == 'Frogs') {
+      groupName = 'Żabki';
+    } else {
+      // Obsługa przypadku, gdy wartość group nie pasuje do żadnego z powyższych
+      groupName = 'Nieznana grupa';
+    }
+
     return Container(
       decoration: BoxDecoration(
           color: Colors.grey[300],
@@ -497,7 +513,7 @@ class _MyWallState extends State<MyWall> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        widget.group,
+                        groupName,
                         style: TextStyle(
                           color: getColorForGroup(widget.group),
                         ),
@@ -531,11 +547,11 @@ class _MyWallState extends State<MyWall> {
                 MyDeleteButton(
                   size: 23,
                   onTap: () {
-                    if (widget.group == "Słoneczka") {
+                    if (widget.group == "Suns") {
                       deleteSunsPost();
-                    } else if (widget.group == "Sówki") {
+                    } else if (widget.group == "Owls") {
                       deleteOwlsPost();
-                    } else if (widget.group == "Żabki") {
+                    } else if (widget.group == "Frogs") {
                       deleteFrogsPost();
                     }
                   },
@@ -573,7 +589,7 @@ class _MyWallState extends State<MyWall> {
                   ),
 //comment count
 //StreamBuilder dla Słoneczka
-                  if (widget.group == 'Słoneczka')
+                  if (widget.group == 'Suns')
                     StreamBuilder(
                       stream: countSunsStream,
                       builder: ((context, snapshot) {
@@ -592,7 +608,7 @@ class _MyWallState extends State<MyWall> {
                       }),
                     ),
 //StreamBuilder dla Sówki
-                  if (widget.group == 'Sówki')
+                  if (widget.group == 'Owls')
                     StreamBuilder(
                       stream: countOwlsStream,
                       builder: ((context, snapshot) {
@@ -611,7 +627,7 @@ class _MyWallState extends State<MyWall> {
                       }),
                     ),
 //StreamBuilder dla Żabki
-                  if (widget.group == 'Żabki')
+                  if (widget.group == 'Frogs')
                     StreamBuilder(
                       stream: countFrogsStream,
                       builder: ((context, snapshot) {
@@ -662,6 +678,7 @@ class _MyWallState extends State<MyWall> {
                     final commentData = doc.data() as Map<String, dynamic>;
                     final commentId = doc.reference.id;
                     return MyComment(
+                      group: widget.group,
                       cmtEmail: commentData['CommentEmail'],
                       postId: widget.postId,
                       commentId: commentId,
