@@ -37,34 +37,47 @@ class _MyCommentState extends State<MyComment> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text('Usuń komentarz'),
-              content: const Text('Czy na pewno chcesz usunąć komentarz?'),
+              backgroundColor: Colors.grey[300],
+              titlePadding: const EdgeInsets.only(left: 85, top: 30),
+              title: Text(
+                style: TextStyle(color: Colors.grey[700]),
+                'Usuń Post',
+              ),
+              content: Text(
+                style: TextStyle(color: Colors.grey[700]),
+                'Czy na pewno chcesz usunąć post?',
+              ),
               actions: [
 //delete button
-                TextButton(
-                  onPressed: () async {
-//delete the comment from firestore
-                    await FirebaseFirestore.instance
-                        .collection('SunsPosts')
-                        .doc(widget.postId)
-                        .collection('Comments')
-                        .doc(widget.commentId)
-                        .delete();
-//pop box
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Usuń',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-//cancel button
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text(
-                    "Anuluj",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        //delete the comment from firestore
+                        await FirebaseFirestore.instance
+                            .collection('SunsPosts')
+                            .doc(widget.postId)
+                            .collection('Comments')
+                            .doc(widget.commentId)
+                            .delete();
+                        //pop box
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Usuń',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    //cancel button
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text(
+                        "Anuluj",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ));
@@ -80,34 +93,47 @@ class _MyCommentState extends State<MyComment> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text('Usuń komentarz'),
-              content: const Text('Czy na pewno chcesz usunąć komentarz?'),
+              backgroundColor: Colors.grey[300],
+              titlePadding: const EdgeInsets.only(left: 85, top: 30),
+              title: Text(
+                style: TextStyle(color: Colors.grey[700]),
+                'Usuń Post',
+              ),
+              content: Text(
+                style: TextStyle(color: Colors.grey[700]),
+                'Czy na pewno chcesz usunąć post?',
+              ),
               actions: [
 //delete button
-                TextButton(
-                  onPressed: () async {
-//delete the comment from firestore
-                    await FirebaseFirestore.instance
-                        .collection('OwlsPosts')
-                        .doc(widget.postId)
-                        .collection('Comments')
-                        .doc(widget.commentId)
-                        .delete();
-//pop box
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Usuń',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-//cancel button
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text(
-                    "Anuluj",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        //delete the comment from firestore
+                        await FirebaseFirestore.instance
+                            .collection('OwlsPosts')
+                            .doc(widget.postId)
+                            .collection('Comments')
+                            .doc(widget.commentId)
+                            .delete();
+                        //pop box
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Usuń',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    //cancel button
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text(
+                        "Anuluj",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ));
@@ -123,34 +149,47 @@ class _MyCommentState extends State<MyComment> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text('Usuń komentarz'),
-              content: const Text('Czy na pewno chcesz usunąć komentarz?'),
+              backgroundColor: Colors.grey[300],
+              titlePadding: const EdgeInsets.only(left: 85, top: 30),
+              title: Text(
+                style: TextStyle(color: Colors.grey[700]),
+                'Usuń Post',
+              ),
+              content: Text(
+                style: TextStyle(color: Colors.grey[700]),
+                'Czy na pewno chcesz usunąć post?',
+              ),
               actions: [
 //delete button
-                TextButton(
-                  onPressed: () async {
-//delete the comment from firestore
-                    await FirebaseFirestore.instance
-                        .collection('FrogsPosts')
-                        .doc(widget.postId)
-                        .collection('Comments')
-                        .doc(widget.commentId)
-                        .delete();
-//pop box
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'Usuń',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-//cancel button
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text(
-                    "Anuluj",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        //delete the comment from firestore
+                        await FirebaseFirestore.instance
+                            .collection('FrogsPosts')
+                            .doc(widget.postId)
+                            .collection('Comments')
+                            .doc(widget.commentId)
+                            .delete();
+                        //pop box
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Usuń',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    //cancel button
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text(
+                        "Anuluj",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ));
@@ -167,7 +206,7 @@ class _MyCommentState extends State<MyComment> {
         borderRadius: BorderRadius.circular(4),
       ),
       margin: const EdgeInsets.only(bottom: 5),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

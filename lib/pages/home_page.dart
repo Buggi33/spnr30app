@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final textController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
-  String dropdownValue = "chooseGroup";
+  String dropdownValue = "Suns";
 
   @override
   void initState() {
@@ -325,7 +325,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              Text("Zalogowany jako: ${currentUser.email!}"),
+              // Text("Zalogowany jako: ${currentUser.email!}"),
             ],
           ),
         ),

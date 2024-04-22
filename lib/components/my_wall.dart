@@ -231,44 +231,60 @@ class _MyWallState extends State<MyWall> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Dodaj komentarz"),
+        backgroundColor: Colors.grey[300],
+        titlePadding: const EdgeInsets.only(left: 50, top: 30),
+        title: Text(
+            style: TextStyle(
+              color: Colors.grey[700],
+            ),
+            "Dodaj komentarz"),
         content: TextField(
           controller: _commentTextController,
-          decoration: const InputDecoration(hintText: "Napisz komentarz.."),
+          decoration: const InputDecoration(
+            hintText: "Napisz komentarz..",
+            hintStyle: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
         ),
         actions: [
 //add comment button
-          TextButton(
-            onPressed: () {
-              if (widget.group == "Suns") {
-                addSunsComment(_commentTextController.text);
-              } else if (widget.group == "Owls") {
-                addOwlsComment(_commentTextController.text);
-              } else if (widget.group == "Frogs") {
-                addFrogsComment(_commentTextController.text);
-              }
-              //pop box
-              Navigator.pop(context);
-              //clear textfild/controller
-              _commentTextController.clear();
-            },
-            child: const Text(
-              "Dodaj",
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-//cancel button
-          TextButton(
-            onPressed: () {
-              //pop box
-              Navigator.pop(context);
-              //clear textfild/controller
-              _commentTextController.clear();
-            },
-            child: Text(
-              "Anuluj",
-              style: TextStyle(color: Colors.grey[700]),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {
+                  if (widget.group == "Suns") {
+                    addSunsComment(_commentTextController.text);
+                  } else if (widget.group == "Owls") {
+                    addOwlsComment(_commentTextController.text);
+                  } else if (widget.group == "Frogs") {
+                    addFrogsComment(_commentTextController.text);
+                  }
+                  //pop box
+                  Navigator.pop(context);
+                  //clear textfild/controller
+                  _commentTextController.clear();
+                },
+                child: Text(
+                  "Dodaj",
+                  style: TextStyle(color: Colors.green[700]),
+                ),
+              ),
+              //cancel button
+              TextButton(
+                onPressed: () {
+                  //pop box
+                  Navigator.pop(context);
+                  //clear textfild/controller
+                  _commentTextController.clear();
+                },
+                child: Text(
+                  "Anuluj",
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -283,47 +299,60 @@ class _MyWallState extends State<MyWall> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Usuń Post'),
-        content: const Text('Czy na pewno chcesz usunąć post?'),
+        backgroundColor: Colors.grey[300],
+        titlePadding: const EdgeInsets.only(left: 85, top: 30),
+        title: Text(
+          style: TextStyle(color: Colors.grey[700]),
+          'Usuń Post',
+        ),
+        content: Text(
+          style: TextStyle(color: Colors.grey[700]),
+          'Czy na pewno chcesz usunąć post?',
+        ),
         actions: [
 //delete button
-          TextButton(
-            onPressed: () async {
-//delete the comments from firestore as first
-              final commentDocs = await FirebaseFirestore.instance
-                  .collection("SunsPosts")
-                  .doc(widget.postId)
-                  .collection("Comments")
-                  .get();
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  //delete the comments from firestore as first
+                  final commentDocs = await FirebaseFirestore.instance
+                      .collection("SunsPosts")
+                      .doc(widget.postId)
+                      .collection("Comments")
+                      .get();
 
-              for (var doc in commentDocs.docs) {
-                await FirebaseFirestore.instance
-                    .collection('SunsPosts')
-                    .doc(widget.postId)
-                    .collection('Comments')
-                    .doc(doc.id)
-                    .delete();
-              }
-//delete the post from firestore as second
-              FirebaseFirestore.instance
-                  .collection("SunsPosts")
-                  .doc(widget.postId)
-                  .delete();
-//pop box
-              Navigator.pop(context);
-            },
-            child: const Text(
-              "Usuń",
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-//cancel button
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              "Anuluj",
-              style: TextStyle(color: Colors.black),
-            ),
+                  for (var doc in commentDocs.docs) {
+                    await FirebaseFirestore.instance
+                        .collection('SunsPosts')
+                        .doc(widget.postId)
+                        .collection('Comments')
+                        .doc(doc.id)
+                        .delete();
+                  }
+                  //delete the post from firestore as second
+                  FirebaseFirestore.instance
+                      .collection("SunsPosts")
+                      .doc(widget.postId)
+                      .delete();
+                  //pop box
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Usuń",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              //cancel button
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  "Anuluj",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -341,47 +370,60 @@ class _MyWallState extends State<MyWall> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Usuń Post'),
-        content: const Text('Czy na pewno chcesz usunąć post?'),
+        backgroundColor: Colors.grey[300],
+        titlePadding: const EdgeInsets.only(left: 85, top: 30),
+        title: Text(
+          style: TextStyle(color: Colors.grey[700]),
+          'Usuń Post',
+        ),
+        content: Text(
+          style: TextStyle(color: Colors.grey[700]),
+          'Czy na pewno chcesz usunąć post?',
+        ),
         actions: [
 //delete button
-          TextButton(
-            onPressed: () async {
-//delete the comments from firestore as first
-              final commentDocs = await FirebaseFirestore.instance
-                  .collection("OwlsPosts")
-                  .doc(widget.postId)
-                  .collection("Comments")
-                  .get();
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  //delete the comments from firestore as first
+                  final commentDocs = await FirebaseFirestore.instance
+                      .collection("OwlsPosts")
+                      .doc(widget.postId)
+                      .collection("Comments")
+                      .get();
 
-              for (var doc in commentDocs.docs) {
-                await FirebaseFirestore.instance
-                    .collection('OwlsPosts')
-                    .doc(widget.postId)
-                    .collection('Comments')
-                    .doc(doc.id)
-                    .delete();
-              }
-//delete the post from firestore as second
-              FirebaseFirestore.instance
-                  .collection("OwlsPosts")
-                  .doc(widget.postId)
-                  .delete();
-//pop box
-              Navigator.pop(context);
-            },
-            child: const Text(
-              "Usuń",
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-//cancel button
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              "Anuluj",
-              style: TextStyle(color: Colors.black),
-            ),
+                  for (var doc in commentDocs.docs) {
+                    await FirebaseFirestore.instance
+                        .collection('OwlsPosts')
+                        .doc(widget.postId)
+                        .collection('Comments')
+                        .doc(doc.id)
+                        .delete();
+                  }
+                  //delete the post from firestore as second
+                  FirebaseFirestore.instance
+                      .collection("OwlsPosts")
+                      .doc(widget.postId)
+                      .delete();
+                  //pop box
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Usuń",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              //cancel button
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  "Anuluj",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -395,47 +437,60 @@ class _MyWallState extends State<MyWall> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Usuń Post'),
-        content: const Text('Czy na pewno chcesz usunąć post?'),
+        backgroundColor: Colors.grey[300],
+        titlePadding: const EdgeInsets.only(left: 85, top: 30),
+        title: Text(
+          style: TextStyle(color: Colors.grey[700]),
+          'Usuń Post',
+        ),
+        content: Text(
+          style: TextStyle(color: Colors.grey[700]),
+          'Czy na pewno chcesz usunąć post?',
+        ),
         actions: [
 //delete button
-          TextButton(
-            onPressed: () async {
-//delete the comments from firestore as first
-              final commentDocs = await FirebaseFirestore.instance
-                  .collection("FrogsPosts")
-                  .doc(widget.postId)
-                  .collection("Comments")
-                  .get();
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  //delete the comments from firestore as first
+                  final commentDocs = await FirebaseFirestore.instance
+                      .collection("FrogsPosts")
+                      .doc(widget.postId)
+                      .collection("Comments")
+                      .get();
 
-              for (var doc in commentDocs.docs) {
-                await FirebaseFirestore.instance
-                    .collection('FrogsPosts')
-                    .doc(widget.postId)
-                    .collection('Comments')
-                    .doc(doc.id)
-                    .delete();
-              }
-//delete the post from firestore as second
-              FirebaseFirestore.instance
-                  .collection("FrogsPosts")
-                  .doc(widget.postId)
-                  .delete();
-//pop box
-              Navigator.pop(context);
-            },
-            child: const Text(
-              "Usuń",
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-//cancel button
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              "Anuluj",
-              style: TextStyle(color: Colors.black),
-            ),
+                  for (var doc in commentDocs.docs) {
+                    await FirebaseFirestore.instance
+                        .collection('FrogsPosts')
+                        .doc(widget.postId)
+                        .collection('Comments')
+                        .doc(doc.id)
+                        .delete();
+                  }
+                  //delete the post from firestore as second
+                  FirebaseFirestore.instance
+                      .collection("FrogsPosts")
+                      .doc(widget.postId)
+                      .delete();
+                  //pop box
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Usuń",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              //cancel button
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  "Anuluj",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -495,8 +550,8 @@ class _MyWallState extends State<MyWall> {
               spreadRadius: 1,
             )
           ]),
-      margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
-      padding: const EdgeInsets.all(25),
+      margin: const EdgeInsets.only(top: 20, left: 25, right: 25),
+      padding: const EdgeInsets.all(10),
       child:
 //post
           Column(
