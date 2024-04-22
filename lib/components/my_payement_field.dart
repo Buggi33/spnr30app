@@ -49,7 +49,7 @@ class MyPaymentField extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.only(left: 40),
+                  padding: const EdgeInsets.only(left: 25),
                   alignment: Alignment.center,
                   child:
                       Text(style: TextStyle(color: Colors.grey[700]), payment),

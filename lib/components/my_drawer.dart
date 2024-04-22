@@ -2,14 +2,34 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spnr30app/components/my_list_tile.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   const MyDrawer({
     super.key,
   });
 
+  @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
 //sign user out
   void signOut() {
     FirebaseAuth.instance.signOut();
+  }
+
+  final FocusNode _textFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _textFocusNode
+        .unfocus(); // Unfocus pola tekstowego przy wejściu na stronę 1/2
+  }
+
+  @override
+  void dispose() {
+    _textFocusNode.dispose();
+    super.dispose(); //2/2
   }
 
   @override

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/checkbox_provider.dart';
 
 class MyDropdownButton extends StatefulWidget {
   final String value;
@@ -16,6 +19,7 @@ class MyDropdownButton extends StatefulWidget {
 class _MyDropdownButtonState extends State<MyDropdownButton> {
   @override
   Widget build(BuildContext context) {
+    final checkboxProvider = Provider.of<CheckboxProvider>(context);
     return DropdownButton(
       dropdownColor: Colors.grey[300],
       value: widget.value,
@@ -24,21 +28,24 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
       ),
       onChanged: widget.onChangedMDB,
       items: [
-        DropdownMenuItem<String>(
-          alignment: Alignment.bottomCenter,
-          value: "Suns",
-          child: Image.asset('assets/images/sloneczka.png'),
-        ),
-        DropdownMenuItem<String>(
-          alignment: Alignment.bottomCenter,
-          value: "Owls",
-          child: Image.asset('assets/images/sowki.png'),
-        ),
-        DropdownMenuItem<String>(
-          alignment: Alignment.bottomCenter,
-          value: "Frogs",
-          child: Align(child: Image.asset('assets/images/zabki.png')),
-        ),
+        if (checkboxProvider.isCheckedSuns == true)
+          DropdownMenuItem<String>(
+            alignment: Alignment.bottomCenter,
+            value: "Suns",
+            child: Image.asset('assets/images/sloneczka.png'),
+          ),
+        if (checkboxProvider.isCheckedOwls == true)
+          DropdownMenuItem<String>(
+            alignment: Alignment.bottomCenter,
+            value: "Owls",
+            child: Image.asset('assets/images/sowki.png'),
+          ),
+        if (checkboxProvider.isCheckedFrogs == true)
+          DropdownMenuItem<String>(
+            alignment: Alignment.bottomCenter,
+            value: "Frogs",
+            child: Align(child: Image.asset('assets/images/zabki.png')),
+          ),
       ],
     );
   }

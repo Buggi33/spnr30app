@@ -66,7 +66,6 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Wartości są różne.');
         isSwitchedSuns = false;
       }
-      // Zapisz aktualne wartości do SharedPreferences
     } catch (e) {
       print('Błąd: $e');
     }
@@ -98,7 +97,6 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Wartości są różne.');
         isSwitchedOwls = false;
       }
-      // Zapisz aktualne wartości do SharedPreferences
     } catch (e) {
       print('Błąd: $e');
     }
@@ -130,7 +128,6 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Wartości są różne.');
         isSwitchedFrogs = false;
       }
-      // Zapisz aktualne wartości do SharedPreferences
     } catch (e) {
       print('Błąd: $e');
     }

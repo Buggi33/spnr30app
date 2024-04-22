@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:spnr30app/firebase_options.dart';
 import 'package:spnr30app/pages/admin_payments_page.dart';
@@ -18,7 +19,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  final directory = await getApplicationDocumentsDirectory();
+  print(directory.path);
 //init app
   runApp(const MyApp());
 }
