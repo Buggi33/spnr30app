@@ -22,25 +22,29 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
     final checkboxProvider = Provider.of<CheckboxProvider>(context);
     return DropdownButton(
       dropdownColor: Colors.grey[300],
-      value: widget.value,
+      value: widget.value.isEmpty
+          ? widget.value
+          : (checkboxProvider.isCheckedSuns
+              ? 'Suns'
+              : (checkboxProvider.isCheckedOwls ? 'Owls' : 'Frogs')),
       underline: Container(
         color: Colors.grey,
       ),
       onChanged: widget.onChangedMDB,
       items: [
-        if (checkboxProvider.isCheckedSuns == true)
+        if (checkboxProvider.isCheckedSuns)
           DropdownMenuItem<String>(
             alignment: Alignment.bottomCenter,
             value: "Suns",
             child: Image.asset('assets/images/sloneczka.png'),
           ),
-        if (checkboxProvider.isCheckedOwls == true)
+        if (checkboxProvider.isCheckedOwls)
           DropdownMenuItem<String>(
             alignment: Alignment.bottomCenter,
             value: "Owls",
             child: Image.asset('assets/images/sowki.png'),
           ),
-        if (checkboxProvider.isCheckedFrogs == true)
+        if (checkboxProvider.isCheckedFrogs)
           DropdownMenuItem<String>(
             alignment: Alignment.bottomCenter,
             value: "Frogs",

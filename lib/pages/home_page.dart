@@ -22,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final textController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
+  String dropdownValue = "chooseGroup";
 
   @override
   void initState() {
@@ -83,7 +84,6 @@ class _HomePageState extends State<HomePage> {
 //     FirebaseAuth.instance.signOut();
 //   }
 
-  String dropdownValue = 'Suns';
 //current user
   final currentUser = FirebaseAuth.instance.currentUser!;
 

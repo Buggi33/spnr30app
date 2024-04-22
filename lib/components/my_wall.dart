@@ -467,11 +467,11 @@ class _MyWallState extends State<MyWall> {
     String groupName = '';
 
     if (widget.group == 'Suns') {
-      groupName = 'Słoneczka';
+      groupName = 'S Ł O N E C Z K A';
     } else if (widget.group == 'Owls') {
-      groupName = 'Sówki';
+      groupName = 'S Ó W K I';
     } else if (widget.group == 'Frogs') {
-      groupName = 'Żabki';
+      groupName = 'Ż A B K I';
     } else {
       // Obsługa przypadku, gdy wartość group nie pasuje do żadnego z powyższych
       groupName = 'Nieznana grupa';
