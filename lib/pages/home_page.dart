@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final textController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
-  String dropdownValue = "Suns";
+  String dropdownValue = "Start";
 
   @override
   void initState() {
@@ -190,10 +190,10 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
-          foregroundColor: Colors.grey[700],
+          foregroundColor: const Color.fromARGB(255, 245, 26, 64),
           title: const Text("H O M E"),
           centerTitle: true,
-          backgroundColor: Colors.grey[300],
+          backgroundColor: const Color.fromARGB(255, 0, 39, 73),
           shadowColor: Colors.black,
           elevation: 5,
           //         actions: [
@@ -261,18 +261,22 @@ class _HomePageState extends State<HomePage> {
               ),
               //post message sector
               Container(
-                height: 1,
-                decoration: const BoxDecoration(color: Colors.white),
+                height: 2,
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 245, 26, 64)),
               ),
-              Padding(
+              Container(
                 padding: const EdgeInsets.only(
-                    top: 0, left: 25.0, right: 25, bottom: 25),
+                    left: 25, top: 5, right: 25, bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 0, 39, 73),
+                ),
                 child: Column(
                   children: [
                     //dropdown button
                     MyDropdownButton(
                       value: dropdownValue,
-                      onChangedMDB: (String? newValue) {
+                      onChangedMDB: (newValue) {
                         setState(() {
                           dropdownValue = newValue!;
                         });
@@ -289,6 +293,7 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: MyTextField(
+                            style: TextStyle(color: Colors.black),
                             focusNode: _textFocusNode, //odznacza textfield
                             keybordType: TextInputType.multiline,
                             textInputAction: TextInputAction.newline,
@@ -315,9 +320,10 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey[400],
+                              color: const Color.fromARGB(255, 245, 26, 64),
                             ),
-                            child: const Icon(Icons.done, size: 30),
+                            child: const Icon(
+                                color: Colors.white, Icons.done, size: 30),
                           ),
                         ),
                       ],

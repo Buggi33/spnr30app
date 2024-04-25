@@ -35,31 +35,30 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.grey[300],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             children: [
 //header
-              const DrawerHeader(
-                child: Icon(
-                  Icons.person,
-                  size: 80,
-                  color: Colors.grey,
-                ),
-              ),
+              DrawerHeader(child: Image.asset('assets/images/LOGO_30_5.png')),
 //HOME (created by my_list_tile)
               const SizedBox(height: 10),
               MyListTile(
                 icon: Icons.home_outlined,
+                iconColor: Colors.red,
                 text: "H O M E",
+                textColor: const Color.fromARGB(255, 23, 118, 197),
                 onTap: () => Navigator.pop(context),
               ),
               const SizedBox(height: 10),
 //PROFIL (created by my_list_tile)
               MyListTile(
                   icon: Icons.person_outlined,
+                  iconColor: Colors.red,
                   text: "P R O F I L",
+                  textColor: const Color.fromARGB(255, 23, 118, 197),
                   onTap: () {
                     //pop drawer
                     Navigator.pop(context);
@@ -70,7 +69,9 @@ class _MyDrawerState extends State<MyDrawer> {
               const SizedBox(height: 10),
               MyListTile(
                   icon: Icons.credit_card,
+                  iconColor: Colors.red,
                   text: "P Ł A T N O Ś C I",
+                  textColor: const Color.fromARGB(255, 23, 118, 197),
                   onTap: () {
                     //pop drawer
                     Navigator.pop(context);
@@ -81,7 +82,9 @@ class _MyDrawerState extends State<MyDrawer> {
               const SizedBox(height: 10),
               MyListTile(
                   icon: Icons.contact_support_outlined,
+                  iconColor: Colors.red,
                   text: "K O N T A K T",
+                  textColor: const Color.fromARGB(255, 23, 118, 197),
                   onTap: () {
                     //pop drawer
                     Navigator.pop(context);
@@ -95,7 +98,9 @@ class _MyDrawerState extends State<MyDrawer> {
             padding: const EdgeInsets.only(bottom: 100),
             child: MyListTile(
               icon: Icons.logout,
+              iconColor: const Color.fromARGB(255, 23, 118, 197),
               text: "W Y L O G U J",
+              textColor: Colors.red,
               onTap: signOut,
             ),
           ),

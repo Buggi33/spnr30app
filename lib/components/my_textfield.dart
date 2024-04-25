@@ -9,12 +9,14 @@ class MyTextField extends StatelessWidget {
   final maxLines;
   final onChanged;
   final focusNode;
+  final TextStyle style;
 
   const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    required this.style,
     this.keybordType,
     this.textInputAction,
     this.maxLines,
@@ -25,6 +27,8 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(context) {
     return TextField(
+      style: style,
+      cursorColor: const Color.fromARGB(255, 0, 39, 73),
       focusNode: focusNode,
       keyboardType: keybordType,
       textInputAction: textInputAction,

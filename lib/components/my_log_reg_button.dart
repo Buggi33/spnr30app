@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 class MyLogRegButton extends StatelessWidget {
   final void Function()? onTap;
   final String text;
+  final Color textColor;
 
-  const MyLogRegButton({required this.onTap, required this.text, super.key});
+  const MyLogRegButton({
+    required this.textColor,
+    required this.onTap,
+    required this.text,
+    super.key,
+  });
 
   @override
   Widget build(context) {
@@ -14,14 +20,14 @@ class MyLogRegButton extends StatelessWidget {
         padding: const EdgeInsets.all(25),
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
-          color: Colors.grey[700],
+          color: const Color.fromARGB(255, 0, 39, 73),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(
+                color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
           ),
         ),
       ),

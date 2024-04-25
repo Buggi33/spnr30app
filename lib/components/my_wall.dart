@@ -268,7 +268,7 @@ class _MyWallState extends State<MyWall> {
                 },
                 child: Text(
                   "Dodaj",
-                  style: TextStyle(color: Colors.green[700]),
+                  style: TextStyle(color: Colors.blue),
                 ),
               ),
               //cancel button

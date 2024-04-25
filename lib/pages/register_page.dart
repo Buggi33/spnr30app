@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:spnr30app/api/FirebaseApi.dart';
 import 'package:spnr30app/helper/helper_show_dialog.dart';
 import '../components/my_log_reg_button.dart';
 import '../components/my_textfield.dart';
@@ -49,7 +50,8 @@ class _RegisterPageState extends State<RegisterPage> {
         email: emailController.text,
         password: passwordController.text,
       );
-
+      FirebaseApi firebaseApi = FirebaseApi();
+      String? fcmToken = await firebaseApi.initNotificationsAndGetToken();
 //create a user document and collect them in firestore
       await FirebaseFirestore.instance
           .collection("Users")
@@ -57,10 +59,8 @@ class _RegisterPageState extends State<RegisterPage> {
           .set({
         'email': userCredential.user!.email,
         'username': userNameController.text,
+        'FCM_Token': fcmToken,
         // 'kidname': kidNameController.text,
-        'sunsPassword': "",
-        'owlsPassword': "",
-        'frogsPassword': "",
       });
       //pop loading circle
       if (context.mounted) Navigator.pop(context);
@@ -75,120 +75,122 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+      backgroundColor: Colors.grey[300],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
 //logo
 // Image.asset('assets/images/sloneczka.png', height: 150),
-                    Icon(
-                      size: 120,
-                      color: Colors.grey[700],
-                      Icons.person,
-                    ),
+                Image.asset(scale: 5, 'assets/images/LOGO_30_5.png'),
 
-                    const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
 //sign up title
-                    Text(
-                      'Wypełnij poniższe pola!',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 16,
-                      ),
-                    ),
+                const Text(
+                  'Wypełnij poniższe pola!',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 245, 26, 64),
+                    fontSize: 16,
+                  ),
+                ),
 
-                    const SizedBox(height: 25),
+                const SizedBox(height: 25),
 
 //names
-                    MyTextField(
-                      maxLines: 1,
-                      controller: userNameController,
-                      hintText: 'Imie i nazwisko',
-                      obscureText: false,
-                    ),
+                MyTextField(
+                  style: TextStyle(color: Colors.blue[800]),
+                  maxLines: 1,
+                  controller: userNameController,
+                  hintText: 'Imie i nazwisko',
+                  obscureText: false,
+                ),
 
-                    const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
 //kid name
-                    // MyTextField(
-                    //   maxLines: 1,
-                    //   controller: kidNameController,
-                    //   hintText: 'Imię dziecka',
-                    //   obscureText: false,
-                    // ),
+                // MyTextField(
+                //   maxLines: 1,
+                //   controller: kidNameController,
+                //   hintText: 'Imię dziecka',
+                //   obscureText: false,
+                // ),
 
-                    // const SizedBox(height: 10),
+                // const SizedBox(height: 10),
 
 //email field
-                    MyTextField(
-                      maxLines: 1,
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
+                MyTextField(
+                  style: TextStyle(color: Colors.blue[800]),
+                  maxLines: 1,
+                  controller: emailController,
+                  hintText: 'Email',
+                  obscureText: false,
+                ),
 
-                    const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
 //password field
-                    MyTextField(
-                      maxLines: 1,
-                      controller: passwordController,
-                      hintText: 'Hasło',
-                      obscureText: true, //ukrywa hasło pod kropkami
-                    ),
+                MyTextField(
+                  style: TextStyle(color: Colors.blue[800]),
+                  maxLines: 1,
+                  controller: passwordController,
+                  hintText: 'Hasło',
+                  obscureText: true, //ukrywa hasło pod kropkami
+                ),
 
-                    const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
 //confirm password field
-                    MyTextField(
-                      maxLines: 1,
-                      controller: confirmPwdController,
-                      hintText: 'Potwierdź hasło',
-                      obscureText: true, //ukrywa hasło pod kropkami
-                    ),
+                MyTextField(
+                  style: TextStyle(color: Colors.blue[800]),
+                  maxLines: 1,
+                  controller: confirmPwdController,
+                  hintText: 'Potwierdź hasło',
+                  obscureText: true, //ukrywa hasło pod kropkami
+                ),
 
-                    const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
 //sign up btn
-                    MyLogRegButton(
-                      text: 'Zarejestruj',
-                      onTap: signIn,
-                    ),
+                MyLogRegButton(
+                  text: 'Zarejestruj',
+                  textColor: const Color.fromARGB(255, 245, 26, 64),
+                  onTap: signIn,
+                ),
 
-                    const SizedBox(height: 40),
+                const SizedBox(height: 40),
 
 //sign up toggle
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Załóż konto!',
-                          style: TextStyle(color: Colors.grey[500]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Posiadasz już konto?',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: const Text(
+                        'Zaloguj się!',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color.fromARGB(255, 245, 26, 64),
+                          color: Color.fromARGB(255, 245, 26, 64),
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(width: 4),
-                        GestureDetector(
-                          onTap: widget.onTap,
-                          child: Text(
-                            'Zaloguj się!',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -4,12 +4,16 @@ class MyListTile extends StatelessWidget {
   final IconData icon;
   final String text;
   final void Function()? onTap;
+  final Color iconColor;
+  final Color textColor;
 
   const MyListTile({
     super.key,
     required this.icon,
     required this.text,
     required this.onTap,
+    required this.iconColor,
+    required this.textColor,
   });
 
   @override
@@ -19,11 +23,11 @@ class MyListTile extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           icon,
-          color: Colors.grey,
+          color: iconColor,
         ),
         title: Text(
           text,
-          style: TextStyle(color: Colors.grey[700]),
+          style: TextStyle(color: textColor),
         ),
         onTap: onTap,
       ),

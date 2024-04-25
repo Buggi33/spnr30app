@@ -27,10 +27,10 @@ class ContactPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        foregroundColor: Colors.grey[700],
+        foregroundColor: const Color.fromARGB(255, 245, 26, 64),
         title: const Text("K O N T A K T"),
         centerTitle: true,
-        backgroundColor: Colors.grey[300],
+        backgroundColor: const Color.fromARGB(255, 0, 39, 73),
         shadowColor: Colors.black,
         elevation: 5,
       ),
@@ -80,9 +80,9 @@ class ContactPage extends StatelessWidget {
                   const EdgeInsets.only(left: 15, top: 8, right: 15, bottom: 8),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: Colors.blue,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -95,11 +95,11 @@ class ContactPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => _launchPhone("508 872 732"),
-                    child: Text(
+                    child: const Text(
                       '508 872 732',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.grey[600],
+                        color: Color.fromARGB(255, 245, 26, 64),
                       ),
                     ),
                   ),
@@ -129,9 +129,9 @@ class ContactPage extends StatelessWidget {
                   const EdgeInsets.only(left: 15, top: 8, right: 15, bottom: 8),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: Colors.blue,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -139,22 +139,22 @@ class ContactPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => _launchPhone("12 415 56 66"),
-                    child: Text(
+                    child: const Text(
                       '12 415 56 66',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.grey[600],
+                        color: Color.fromARGB(255, 245, 26, 64),
                       ),
                     ),
                   ),
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => _launchPhone("508 872 762"),
-                    child: Text(
+                    child: const Text(
                       '508 872 762',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.grey[600],
+                        color: Color.fromARGB(255, 245, 26, 64),
                       ),
                     ),
                   ),
@@ -184,9 +184,9 @@ class ContactPage extends StatelessWidget {
                   const EdgeInsets.only(left: 15, top: 8, right: 15, bottom: 8),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: Colors.blue,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -194,11 +194,11 @@ class ContactPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => _launchPhone("793 864 377"),
-                    child: Text(
+                    child: const Text(
                       '793 864 377',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.grey[600],
+                        color: Color.fromARGB(255, 245, 26, 64),
                       ),
                     ),
                   ),
@@ -228,9 +228,9 @@ class ContactPage extends StatelessWidget {
                   const EdgeInsets.only(left: 15, top: 8, right: 15, bottom: 8),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: Colors.blue,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -238,11 +238,11 @@ class ContactPage extends StatelessWidget {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () => _launchEmail("zsp16@mjo.krakow.pl"),
-                    child: Text(
+                    child: const Text(
                       'zsp16@mjo.krakow.pl',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.grey[600],
+                        color: Color.fromARGB(255, 245, 26, 64),
                       ),
                     ),
                   ),

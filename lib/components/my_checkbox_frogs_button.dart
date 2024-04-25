@@ -17,6 +17,7 @@ class MyCheckboxFrogsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return isSwitchedFrogs
         ? CheckboxListTile(
+            side: const BorderSide(color: Colors.red),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -24,7 +25,7 @@ class MyCheckboxFrogsButton extends StatelessWidget {
               'Activated',
               style: TextStyle(color: Colors.green[400]),
             ),
-            activeColor: Colors.grey,
+            activeColor: const Color.fromARGB(255, 245, 26, 64),
             checkColor: Colors.white,
             tileColor: Colors.grey[200],
             controlAffinity: ListTileControlAffinity.leading,

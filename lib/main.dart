@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:spnr30app/api/FirebaseApi.dart';
 import 'package:spnr30app/firebase_options.dart';
 import 'package:spnr30app/pages/admin_payments_page.dart';
 import 'package:spnr30app/pages/contact_page.dart';
@@ -16,11 +16,8 @@ void main() async {
 //init firebase
   WidgetsFlutterBinding.ensureInitialized();
   // MyGoogleSheetApi().init();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  final directory = await getApplicationDocumentsDirectory();
-  print(directory.path);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseApi().initNotificationsAndGetToken();
 //init app
   runApp(const MyApp());
 }

@@ -32,14 +32,14 @@ class _PaymentsPageState extends State<PaymentsPage> {
     return GestureDetector(
       onTap: _handleTap,
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         appBar: AppBar(
-          foregroundColor: Colors.grey[700],
+          foregroundColor: const Color.fromARGB(255, 245, 26, 64),
           centerTitle: true,
           title: const Text('P Ł A T N O Ś C I'),
           elevation: 6,
           shadowColor: Colors.black,
-          backgroundColor: Colors.grey[300],
+          backgroundColor: const Color.fromARGB(255, 0, 39, 73),
           actions: [
             (currentUser.email == 'admin@admin.com')
                 ? IconButton(
@@ -52,8 +52,8 @@ class _PaymentsPageState extends State<PaymentsPage> {
         body: Column(
           children: [
             Container(
-              decoration: BoxDecoration(
-                boxShadow: const [
+              decoration: const BoxDecoration(
+                boxShadow: [
                   BoxShadow(
                     color: Colors.grey,
                     offset: Offset(0, 4),
@@ -61,20 +61,19 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     spreadRadius: 5,
                   ),
                 ],
-                color: Colors.grey[350],
+                color: Color.fromARGB(255, 0, 39, 73),
               ),
               padding:
                   const EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 5),
               height: 30,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text(style: TextStyle(color: Colors.white), 'Numer umowy'),
                   Text(
-                      style: TextStyle(color: Colors.grey[700]), 'Numer umowy'),
-                  Text(
-                      style: TextStyle(color: Colors.grey[700]),
+                      style: TextStyle(color: Colors.white),
                       'Kwota do zapłaty'),
-                  Text(style: TextStyle(color: Colors.grey[700]), 'Nadpłata'),
+                  Text(style: TextStyle(color: Colors.white), 'Nadpłata'),
                 ],
               ),
             ),
@@ -118,8 +117,8 @@ class _PaymentsPageState extends State<PaymentsPage> {
             ),
             Container(
                 height: 60,
-                decoration: BoxDecoration(
-                  boxShadow: const [
+                decoration: const BoxDecoration(
+                  boxShadow: [
                     BoxShadow(
                       color: Colors.grey,
                       offset: Offset(0, 4),
@@ -127,12 +126,13 @@ class _PaymentsPageState extends State<PaymentsPage> {
                       spreadRadius: 5,
                     ),
                   ],
-                  color: Colors.grey[300],
+                  color: Color.fromARGB(255, 0, 39, 73),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: 50, top: 10, right: 50, bottom: 10),
                   child: TextField(
+                    cursorColor: const Color.fromARGB(255, 0, 39, 73),
                     focusNode: _textFocusNode,
                     onChanged: (String value) {
                       setState(() {
@@ -143,10 +143,10 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     style: TextStyle(color: Colors.grey[700]),
                     decoration: InputDecoration(
                       hintText: 'Wyszukaj..',
-                      fillColor: Colors.grey[400],
+                      fillColor: Colors.grey[300],
                       contentPadding: const EdgeInsets.all(0),
                       prefixIcon: const Icon(
-                          color: Colors.white, Icons.search), //padding inside
+                          color: Colors.red, Icons.search), //padding inside
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide.none, //none underline

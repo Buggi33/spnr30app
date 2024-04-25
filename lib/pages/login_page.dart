@@ -64,27 +64,25 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SafeArea(
-          child: Center(
+      backgroundColor: Colors.grey[300],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 //logo
 // Image.asset('assets/images/sloneczka.png', height: 150),
-                Icon(
-                  Icons.lock,
-                  size: 120,
-                  color: Colors.grey[700],
-                ),
+                Image.asset(scale: 5, 'assets/images/LOGO_30_5.png'),
 
                 const SizedBox(height: 20),
 
 //welcome title
-                Text(
+                const Text(
                   'Witaj w SPNR30!',
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: Color.fromARGB(255, 245, 26, 64),
                     fontSize: 16,
                   ),
                 ),
@@ -100,6 +98,7 @@ class _LoginPage extends State<LoginPage> {
                     bottom: 5,
                   ),
                   child: MyTextField(
+                    style: TextStyle(color: Colors.blue[800]),
                     maxLines: 1,
                     controller: emailController,
                     hintText: 'Email',
@@ -116,6 +115,7 @@ class _LoginPage extends State<LoginPage> {
                     bottom: 5,
                   ),
                   child: MyTextField(
+                    style: TextStyle(color: Colors.blue[800]),
                     maxLines: 1,
                     controller: passwordController,
                     hintText: 'Hasło',
@@ -144,6 +144,7 @@ class _LoginPage extends State<LoginPage> {
 //zaloguj się btn
                 MyLogRegButton(
                   text: 'Zaloguj',
+                  textColor: const Color.fromARGB(255, 245, 26, 64),
                   onTap: logIn,
                 ),
 
@@ -200,17 +201,19 @@ class _LoginPage extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Załóż konto!',
-                      style: TextStyle(color: Colors.grey[500]),
+                    const Text(
+                      'Nie posiadasz konta?',
+                      style: TextStyle(color: Colors.blue),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: Text(
+                      child: const Text(
                         'Zarejestruj się!',
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color.fromARGB(255, 245, 26, 64),
+                          color: Color.fromARGB(255, 245, 26, 64),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -220,6 +223,8 @@ class _LoginPage extends State<LoginPage> {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

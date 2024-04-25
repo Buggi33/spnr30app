@@ -36,7 +36,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  firebase_core: ^2.27.2
+  firebase_core: ^2.30.1
   firebase_auth: ^4.18.0
   cloud_firestore: ^4.16.0
   gsheets:
@@ -44,12 +44,29 @@ dependencies:
   provider:
   shared_preferences: ^2.2.3
   url_launcher:
-  path_provider:
+  firebase_messaging: ^14.9.0
+  
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons:
+  flutter_app_name: ^0.1.0
+  flutter_native_splash:
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/30.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+flutter_app_name:
+  name: "SPNR30"
+
+flutter_native_splash:
+  color: "E0E0E0"
+  image: assets/icon/30.png
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,6 +93,7 @@ flutter:
     - assets/images/zabki.png
     - assets/images/Apple_Icon.png
     - assets/images/Google_Icon.png
+    - assets/images/LOGO_30_5.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

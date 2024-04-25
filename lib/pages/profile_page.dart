@@ -138,9 +138,10 @@ class _ProfilePageState extends State<ProfilePage> {
     final checkboxProvider = Provider.of<CheckboxProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        foregroundColor: Colors.grey[700],
-        backgroundColor: Colors.white,
+        foregroundColor: const Color.fromARGB(255, 245, 26, 64),
+        backgroundColor: const Color.fromARGB(255, 0, 39, 73),
         shadowColor: Colors.black,
         elevation: 5,
         centerTitle: true,
@@ -178,7 +179,8 @@ class _ProfilePageState extends State<ProfilePage> {
 //username
                         Text(
                           userData['username'],
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 245, 26, 64)),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 10),
@@ -192,7 +194,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         Text(
                           currentUser.email!,
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 245, 26, 64)),
                         ),
                         const SizedBox(height: 60),
                       ],
@@ -242,6 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         width: 125,
                         child: Center(
                           child: MyTextField(
+                            style: TextStyle(color: Colors.blue[800]),
                             keybordType: TextInputType.multiline,
                             maxLines: 1,
                             controller: _pwdTxtController1,
@@ -257,7 +261,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: const EdgeInsets.all(14),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey[400],
+                              color: const Color.fromARGB(255, 245, 26, 64),
                             ),
                             child: const Icon(
                               color: Colors.white,
@@ -302,6 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 125,
                     child: Center(
                       child: MyTextField(
+                        style: TextStyle(color: Colors.blue[800]),
                         keybordType: TextInputType.multiline,
                         maxLines: 1,
                         controller: _pwdTxtController2,
@@ -317,7 +322,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey[400],
+                          color: const Color.fromARGB(255, 245, 26, 64),
                         ),
                         child: const Icon(
                           color: Colors.white,
@@ -360,6 +365,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 125,
                     child: Center(
                       child: MyTextField(
+                        style: TextStyle(color: Colors.blue[800]),
                         keybordType: TextInputType.multiline,
                         maxLines: 1,
                         controller: _pwdTxtController3,
@@ -375,7 +381,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey[400],
+                          color: const Color.fromARGB(255, 245, 26, 64),
                         ),
                         child: const Icon(
                           color: Colors.white,

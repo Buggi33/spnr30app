@@ -21,34 +21,56 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
   Widget build(BuildContext context) {
     final checkboxProvider = Provider.of<CheckboxProvider>(context);
     return DropdownButton(
+      icon: const Icon(
+          color: Color.fromARGB(255, 245, 26, 64), Icons.arrow_drop_down),
       dropdownColor: Colors.grey[300],
-      value: widget.value.isEmpty
-          ? widget.value
-          : (checkboxProvider.isCheckedSuns
-              ? 'Suns'
-              : (checkboxProvider.isCheckedOwls ? 'Owls' : 'Frogs')),
+      value: widget.value,
       underline: Container(
         color: Colors.grey,
       ),
       onChanged: widget.onChangedMDB,
       items: [
+        const DropdownMenuItem<String>(
+          value: "Start",
+          child: Row(
+            children: [
+              const SizedBox(width: 25),
+              Text(
+                  style: TextStyle(color: Color.fromARGB(255, 245, 26, 64)),
+                  'Wybierz grupę'),
+            ],
+          ),
+        ),
         if (checkboxProvider.isCheckedSuns)
           DropdownMenuItem<String>(
-            alignment: Alignment.bottomCenter,
             value: "Suns",
-            child: Image.asset('assets/images/sloneczka.png'),
+            child: Row(
+              children: [
+                const SizedBox(width: 42),
+                Image.asset('assets/images/sloneczka.png'),
+              ],
+            ),
           ),
         if (checkboxProvider.isCheckedOwls)
           DropdownMenuItem<String>(
-            alignment: Alignment.bottomCenter,
             value: "Owls",
-            child: Image.asset('assets/images/sowki.png'),
+            child: Row(
+              children: [
+                const SizedBox(width: 60),
+                Image.asset('assets/images/sowki.png'),
+              ],
+            ),
           ),
         if (checkboxProvider.isCheckedFrogs)
           DropdownMenuItem<String>(
-            alignment: Alignment.bottomCenter,
+            // alignment: Alignment.center,
             value: "Frogs",
-            child: Align(child: Image.asset('assets/images/zabki.png')),
+            child: Row(
+              children: [
+                const SizedBox(width: 55),
+                Image.asset('assets/images/zabki.png'),
+              ],
+            ),
           ),
       ],
     );
