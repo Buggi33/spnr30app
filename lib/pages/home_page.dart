@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final textController = TextEditingController();
   final FocusNode _textFocusNode = FocusNode();
-  String dropdownValue = "Start";
+  String dropdownValue = 'Start';
 
   @override
   void initState() {
@@ -42,6 +42,12 @@ class _HomePageState extends State<HomePage> {
     if (_textFocusNode.hasFocus) {
       _textFocusNode.unfocus(); // Jeśli pole jest zaznaczone, odznacz je
     }
+  }
+
+  void resetDropdownValue() {
+    setState(() {
+      dropdownValue = "Start";
+    });
   }
 
 // Metoda łącząca strumienie z trzech kolekcji
@@ -91,7 +97,7 @@ class _HomePageState extends State<HomePage> {
 //add a post
   void addSunsPost() async {
 //add only when something is in text field
-    if (textController.text.isNotEmpty) {
+    if (textController.text.isNotEmpty && dropdownValue != "Start") {
 //search the 'username' in other collection (Users)
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
           .collection('Users')
@@ -116,6 +122,11 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         textController.clear();
       });
+    } else {
+      setState(() {
+        textController.clear();
+        Navigator.pop(context);
+      });
     }
   }
 
@@ -123,7 +134,7 @@ class _HomePageState extends State<HomePage> {
 //add a post
   void addOwlsPost() async {
 //add only when something is in text field
-    if (textController.text.isNotEmpty) {
+    if (textController.text.isNotEmpty && dropdownValue != "Start") {
 //search the 'username' in other collection (Users)
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
           .collection('Users')
@@ -148,6 +159,11 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         textController.clear();
       });
+    } else {
+      setState(() {
+        textController.clear();
+        Navigator.pop(context);
+      });
     }
   }
 
@@ -155,7 +171,7 @@ class _HomePageState extends State<HomePage> {
 //add a post
   void addFrogsPost() async {
 //add only when something is in text field
-    if (textController.text.isNotEmpty) {
+    if (textController.text.isNotEmpty && dropdownValue != "Start") {
 //search the 'username' in other collection (Users)
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
           .collection('Users')
@@ -179,6 +195,11 @@ class _HomePageState extends State<HomePage> {
       }
       setState(() {
         textController.clear();
+      });
+    } else {
+      setState(() {
+        textController.clear();
+        Navigator.pop(context);
       });
     }
   }
@@ -278,7 +299,22 @@ class _HomePageState extends State<HomePage> {
                       value: dropdownValue,
                       onChangedMDB: (newValue) {
                         setState(() {
-                          dropdownValue = newValue!;
+                          // Pobierz aktualny stan checkboxów
+                          final checkboxProvider =
+                              Provider.of<CheckboxProvider>(context,
+                                  listen: false);
+                          final List<bool> checkboxValues =
+                              checkboxProvider.getCurrentCheckboxValues();
+
+                          if (newValue != null &&
+                              checkboxValues.contains(true)) {
+                            // Sprawdź, czy nowa wartość jest dostępna w zaznaczonych checkboxach
+                            // Jeśli tak, ustaw nową wartość
+                            dropdownValue = newValue;
+                          } else {
+                            // Jeśli nowa wartość nie jest dostępna, ustaw domyślną wartość "Start"
+                            dropdownValue = "Start";
+                          }
                         });
                       },
                     ),

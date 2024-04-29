@@ -31,7 +31,7 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
       onChanged: widget.onChangedMDB,
       items: [
         const DropdownMenuItem<String>(
-          value: "Start",
+          value: 'Start',
           child: Row(
             children: [
               const SizedBox(width: 25),

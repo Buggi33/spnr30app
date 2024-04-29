@@ -5,6 +5,7 @@ import 'package:spnr30app/api/FirebaseApi.dart';
 import 'package:spnr30app/firebase_options.dart';
 import 'package:spnr30app/pages/admin_payments_page.dart';
 import 'package:spnr30app/pages/contact_page.dart';
+import 'package:spnr30app/pages/gallery_page.dart';
 import 'package:spnr30app/pages/home_page.dart';
 import 'package:spnr30app/pages/profile_page.dart';
 import 'package:spnr30app/pages/payments_page.dart';
@@ -17,7 +18,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // MyGoogleSheetApi().init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseApi().initNotificationsAndGetToken();
+  await FirebaseApiMessaging().initNotificationsAndGetToken();
+
 //init app
   runApp(const MyApp());
 }
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget {
           '/profile_page': (context) => const ProfilePage(),
           '/users_page': (context) => const PaymentsPage(),
           '/admin_payments_page': (context) => const AdminPaymentsPage(),
+          '/gallery_page': (context) => const GalleryPage(),
         },
       ),
     );

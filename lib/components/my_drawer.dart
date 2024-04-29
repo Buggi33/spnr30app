@@ -78,6 +78,19 @@ class _MyDrawerState extends State<MyDrawer> {
                     //navigate to profil page
                     Navigator.pushNamed(context, '/users_page');
                   }),
+//GALLERY (created by my_list_tile)
+              const SizedBox(height: 10),
+              MyListTile(
+                  icon: Icons.photo_library_outlined,
+                  iconColor: Colors.red,
+                  text: "G A L E R I A",
+                  textColor: const Color.fromARGB(255, 23, 118, 197),
+                  onTap: () {
+                    //pop drawer
+                    Navigator.pop(context);
+                    //navigate to profil page
+                    Navigator.pushNamed(context, '/gallery_page');
+                  }),
 //CONTACT (created by my_list_tile)
               const SizedBox(height: 10),
               MyListTile(

@@ -22,8 +22,8 @@ class MyCheckboxFrogsButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             subtitle: Text(
-              'Activated',
-              style: TextStyle(color: Colors.green[400]),
+              'Aktywne',
+              style: TextStyle(fontSize: 13, color: Colors.green[400]),
             ),
             activeColor: const Color.fromARGB(255, 245, 26, 64),
             checkColor: Colors.white,
@@ -39,8 +39,8 @@ class MyCheckboxFrogsButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             subtitle: Text(
-              'Disactivated',
-              style: TextStyle(color: Colors.red[400]),
+              'Nieaktywne',
+              style: TextStyle(fontSize: 13, color: Colors.red[400]),
             ),
             activeColor: Colors.grey,
             tileColor: Colors.grey[200],

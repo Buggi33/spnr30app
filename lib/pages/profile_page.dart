@@ -146,6 +146,14 @@ class _ProfilePageState extends State<ProfilePage> {
         elevation: 5,
         centerTitle: true,
         title: const Text("P R O F I L"),
+//replace the back arrow button for another wich recreate home page to default
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: const Color.fromARGB(255, 245, 26, 64)),
+          onPressed: () => Navigator.pushNamed(context, '/home_page').then((_) {
+            setState(() {});
+          }),
+        ),
       ),
 //create stream reading Users collection
       body: SingleChildScrollView(
@@ -215,184 +223,179 @@ class _ProfilePageState extends State<ProfilePage> {
 //checkbox suns
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 62,
-                          width: 180,
-                          child: MyCheckboxSunsButton(
-                            isSwitchedSuns: isSwitchedSuns,
-                            title: SizedBox(
-                              height: 30,
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Image.asset(
-                                      'assets/images/sloneczka.png')),
-                            ),
-                            value: checkboxProvider.isCheckedSuns,
-                            onChanged: (newValue) {
-                              checkboxProvider.toggleCBSuns();
-                            },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 62,
+                      width: 180,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: MyCheckboxSunsButton(
+                          isSwitchedSuns: isSwitchedSuns,
+                          title: SizedBox(
+                            height: 30,
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child:
+                                    Image.asset('assets/images/sloneczka.png')),
+                          ),
+                          value: checkboxProvider.isCheckedSuns,
+                          onChanged: (newValue) {
+                            checkboxProvider.toggleCBSuns();
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 90,
+                      width: 110,
+                      child: Center(
+                        child: MyTextField(
+                          style: TextStyle(color: Colors.blue[800]),
+                          keybordType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _pwdTxtController1,
+                          hintText: 'Hasło',
+                          obscureText: true,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: IconButton(
+                        onPressed: compareSunsPasswords,
+                        icon: Container(
+                          padding: const EdgeInsets.all(13),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: const Color.fromARGB(255, 245, 26, 64),
+                          ),
+                          child: const Icon(
+                            color: Colors.white,
+                            Icons.done,
+                            size: 30,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 90,
-                        width: 125,
-                        child: Center(
-                          child: MyTextField(
-                            style: TextStyle(color: Colors.blue[800]),
-                            keybordType: TextInputType.multiline,
-                            maxLines: 1,
-                            controller: _pwdTxtController1,
-                            hintText: 'Hasło',
-                            obscureText: true,
+                    )
+                  ],
+                ),
+
+//checkbox owls
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 62,
+                      width: 180,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: MyCheckboxFrogsButton(
+                          isSwitchedFrogs: isSwitchedOwls,
+                          title: SizedBox(
+                            height: 30,
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Image.asset('assets/images/sowki.png')),
+                          ),
+                          value: checkboxProvider.isCheckedOwls,
+                          onChanged: (newValue) {
+                            checkboxProvider.toggleCBOwls();
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 90,
+                      width: 110,
+                      child: Center(
+                        child: MyTextField(
+                          style: TextStyle(color: Colors.blue[800]),
+                          keybordType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _pwdTxtController2,
+                          hintText: 'Hasło',
+                          obscureText: true,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: IconButton(
+                        onPressed: compareOwlsPasswords,
+                        icon: Container(
+                          padding: const EdgeInsets.all(13),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: const Color.fromARGB(255, 245, 26, 64),
+                          ),
+                          child: const Icon(
+                            color: Colors.white,
+                            Icons.done,
+                            size: 30,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        child: IconButton(
-                          onPressed: compareSunsPasswords,
-                          icon: Container(
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: const Color.fromARGB(255, 245, 26, 64),
-                            ),
-                            child: const Icon(
-                              color: Colors.white,
-                              Icons.done,
-                              size: 30,
-                            ),
+                    )
+                  ],
+                ),
+//checkbox frogs
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 62,
+                      width: 180,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: MyCheckboxOwlsButton(
+                          isSwitchedOwls: isSwitchedFrogs,
+                          title: SizedBox(
+                            height: 30,
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Image.asset('assets/images/zabki.png')),
+                          ),
+                          value: checkboxProvider.isCheckedFrogs,
+                          onChanged: (newValue) {
+                            checkboxProvider.toggleCBFrogs();
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 90,
+                      width: 110,
+                      child: Center(
+                        child: MyTextField(
+                          style: TextStyle(color: Colors.blue[800]),
+                          keybordType: TextInputType.multiline,
+                          maxLines: 1,
+                          controller: _pwdTxtController3,
+                          hintText: 'Hasło',
+                          obscureText: true,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: IconButton(
+                        onPressed: compareFrogsPasswords,
+                        icon: Container(
+                          padding: const EdgeInsets.all(13),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: const Color.fromARGB(255, 245, 26, 64),
+                          ),
+                          child: const Icon(
+                            color: Colors.white,
+                            Icons.done,
+                            size: 30,
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ],
-            ),
-//checkbox owls
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 62,
-                      width: 180,
-                      child: MyCheckboxFrogsButton(
-                        isSwitchedFrogs: isSwitchedOwls,
-                        title: SizedBox(
-                          height: 30,
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Image.asset('assets/images/sowki.png')),
-                        ),
-                        value: checkboxProvider.isCheckedOwls,
-                        onChanged: (newValue) {
-                          checkboxProvider.toggleCBOwls();
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 90,
-                    width: 125,
-                    child: Center(
-                      child: MyTextField(
-                        style: TextStyle(color: Colors.blue[800]),
-                        keybordType: TextInputType.multiline,
-                        maxLines: 1,
-                        controller: _pwdTxtController2,
-                        hintText: 'Hasło',
-                        obscureText: true,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    child: IconButton(
-                      onPressed: compareOwlsPasswords,
-                      icon: Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: const Color.fromARGB(255, 245, 26, 64),
-                        ),
-                        child: const Icon(
-                          color: Colors.white,
-                          Icons.done,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-//checkbox frogs
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 62,
-                      width: 180,
-                      child: MyCheckboxOwlsButton(
-                        isSwitchedOwls: isSwitchedFrogs,
-                        title: SizedBox(
-                          height: 30,
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Image.asset('assets/images/zabki.png')),
-                        ),
-                        value: checkboxProvider.isCheckedFrogs,
-                        onChanged: (newValue) {
-                          checkboxProvider.toggleCBFrogs();
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 90,
-                    width: 125,
-                    child: Center(
-                      child: MyTextField(
-                        style: TextStyle(color: Colors.blue[800]),
-                        keybordType: TextInputType.multiline,
-                        maxLines: 1,
-                        controller: _pwdTxtController3,
-                        hintText: 'Hasło',
-                        obscureText: true,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    child: IconButton(
-                      onPressed: compareFrogsPasswords,
-                      icon: Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: const Color.fromARGB(255, 245, 26, 64),
-                        ),
-                        child: const Icon(
-                          color: Colors.white,
-                          Icons.done,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
             ),
           ],
         ),

@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
         email: emailController.text,
         password: passwordController.text,
       );
-      FirebaseApi firebaseApi = FirebaseApi();
+      FirebaseApiMessaging firebaseApi = FirebaseApiMessaging();
       String? fcmToken = await firebaseApi.initNotificationsAndGetToken();
 //create a user document and collect them in firestore
       await FirebaseFirestore.instance

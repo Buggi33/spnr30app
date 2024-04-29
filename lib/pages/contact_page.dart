@@ -39,6 +39,7 @@ class ContactPage extends StatelessWidget {
           children: [
             Container(
               height: 20,
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.grey[350],
                 boxShadow: const [
@@ -50,8 +51,7 @@ class ContactPage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 51),
+              child: Center(
                 child: Text(
                     style: TextStyle(color: Colors.grey),
                     'Kliknij odpowiedni numer lub email, aby wybrać.'),

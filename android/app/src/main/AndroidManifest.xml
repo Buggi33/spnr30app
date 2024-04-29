@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+ 
     <application
         android:label="SPNR30"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:enableOnBackInvokedCallback="true"
+        android:requestLegacyExternalStorage="true"
     >
         <activity
             android:name=".MainActivity"
@@ -64,6 +68,6 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="mailto" />
-        </intent>
+    </intent>
 </queries>
 </manifest>
