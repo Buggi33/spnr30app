@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spnr30app/api/FirebaseApi.dart';
 import 'package:spnr30app/components/my_firebase_file.dart';
-import 'package:spnr30app/pages/image_page.dart';
+import 'package:spnr30app/pages/photo_gallery_page.dart';
 
 class GalleryPage extends StatefulWidget {
   const GalleryPage({super.key});
@@ -69,7 +69,6 @@ class _GalleryPageState extends State<GalleryPage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // buildHeader(0),
                         const SizedBox(height: 12),
                         Expanded(
                           child: GridView.builder(
@@ -79,7 +78,7 @@ class _GalleryPageState extends State<GalleryPage> {
                             itemCount: files.length,
                             itemBuilder: (context, index) {
                               final file = files[index];
-                              return buildFile(context, file);
+                              return buildFile(context, file, futureFiles);
                             },
                           ),
                         ),
@@ -94,13 +93,16 @@ class _GalleryPageState extends State<GalleryPage> {
     );
   }
 
-  Widget buildFile(BuildContext context, FirebaseFile file) => Padding(
+  Widget buildFile(BuildContext context, FirebaseFile file,
+          Future<List<FirebaseFile>> futureFiles) =>
+      Padding(
         padding: const EdgeInsets.all(5.0),
         child: GestureDetector(
           child: Image.network(file.url),
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => ImagePage(file: file),
+              builder: (context) =>
+                  PhotoGalleryPage(file: file, futureFiles: futureFiles),
             ),
           ),
         ),
