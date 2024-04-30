@@ -8,12 +8,14 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:spnr30app/components/my_firebase_file.dart';
 
 class PhotoGalleryPage extends StatefulWidget {
-  final Future<List<FirebaseFile>> futureFiles;
   final FirebaseFile file;
+  final Future<List<FirebaseFile>> futureFiles;
+  final int initialIndex;
   const PhotoGalleryPage({
     super.key,
     required this.file,
     required this.futureFiles,
+    required this.initialIndex,
   });
 
   @override
@@ -23,11 +25,12 @@ class PhotoGalleryPage extends StatefulWidget {
 class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
   late Future<ListResult> futureFiles;
   late Reference fileReference;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-
+    _pageController = PageController(initialPage: widget.initialIndex);
     // futureFiles = FirebaseStorage.instance.ref('/SnowRunner').listAll();
     fileReference = FirebaseStorage.instance.refFromURL(widget.file.url);
   }
@@ -49,6 +52,9 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
               } else {
                 final files = snapshot.data!;
                 return PhotoViewGallery.builder(
+                  scrollPhysics: const BouncingScrollPhysics(),
+                  pageController: _pageController,
+                  scrollDirection: Axis.horizontal,
                   itemCount: files.length,
                   builder: (context, index) {
                     final file = files[index];
@@ -61,7 +67,6 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
                       maxScale: PhotoViewComputedScale.covered * 1.5,
                     );
                   },
-                  scrollPhysics: const BouncingScrollPhysics(),
                 );
               }
             },
@@ -79,7 +84,7 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
           ),
           Positioned(
             bottom: 50,
-            right: 170,
+            right: 163,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 245, 26, 64),

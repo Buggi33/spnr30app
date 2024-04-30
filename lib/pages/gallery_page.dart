@@ -17,7 +17,7 @@ class _GalleryPageState extends State<GalleryPage> {
   void initState() {
     super.initState();
 //set a current folder in firebase
-    futureFiles = FirebaseApiGallery.listAll('/SnowRunner');
+    futureFiles = FirebaseApiGallery.listAll('/media');
   }
 
   @override
@@ -78,7 +78,8 @@ class _GalleryPageState extends State<GalleryPage> {
                             itemCount: files.length,
                             itemBuilder: (context, index) {
                               final file = files[index];
-                              return buildFile(context, file, futureFiles);
+                              return buildFile(
+                                  context, file, futureFiles, index);
                             },
                           ),
                         ),
@@ -94,15 +95,18 @@ class _GalleryPageState extends State<GalleryPage> {
   }
 
   Widget buildFile(BuildContext context, FirebaseFile file,
-          Future<List<FirebaseFile>> futureFiles) =>
+          Future<List<FirebaseFile>> futureFiles, int index) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: GestureDetector(
           child: Image.network(file.url),
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) =>
-                  PhotoGalleryPage(file: file, futureFiles: futureFiles),
+              builder: (context) => PhotoGalleryPage(
+                file: file,
+                futureFiles: futureFiles,
+                initialIndex: index,
+              ),
             ),
           ),
         ),
