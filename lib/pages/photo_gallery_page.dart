@@ -23,7 +23,7 @@ class PhotoGalleryPage extends StatefulWidget {
 }
 
 class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
-  late Future<ListResult> futureFiles;
+  late Future<List<FirebaseFile>> futureFiles;
   late Reference fileReference;
   late PageController _pageController;
 
@@ -52,8 +52,11 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
               } else {
                 final files = snapshot.data!;
                 return PhotoViewGallery.builder(
-                  scrollPhysics: const BouncingScrollPhysics(),
                   pageController: _pageController,
+                  onPageChanged: (index) {
+                    _pageController.jumpToPage(index);
+                  },
+                  scrollPhysics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: files.length,
                   builder: (context, index) {
@@ -94,7 +97,7 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
               ),
               child: Icon(size: 20, color: Colors.white, Icons.download),
               onPressed: () {
-                downloadFile(fileReference);
+                downloadFile(_pageController.page!.toInt(), widget.futureFiles);
               },
             ),
           ),
@@ -103,7 +106,11 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
     );
   }
 
-  Future downloadFile(Reference ref) async {
+  Future downloadFile(int index, Future<List<FirebaseFile>> futureFiles) async {
+    final files = await futureFiles;
+    final FirebaseFile file = files[index];
+    final ref = FirebaseStorage.instance.refFromURL(file.url);
+
     final url = await ref.getDownloadURL();
 
     final tempDir = await getTemporaryDirectory();
